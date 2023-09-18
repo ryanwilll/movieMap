@@ -26,6 +26,9 @@
   align-items: center;
   gap: 1rem;
   color: #fff;
+  background-color: transparent;
+  cursor: pointer;
+  border: none;
   font-size: 4rem;
   top: 7rem;
   left: 2rem;

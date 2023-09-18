@@ -1,4 +1,4 @@
-import { Link, useParams } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 
 import { useEffect, useState } from 'react'
 import { getDatas } from '../../services/api'
@@ -20,6 +20,7 @@ const URL_IMAGE = import.meta.env.VITE_IMG_DETAILS
 
 const Movie = () => {
   const { id, type } = useParams()
+  const navigate = useNavigate()
   const [isOpen, setIsOpen] = useState<boolean>(false)
   const { loading, getMoviesOrSeries, error, detailsMovie, detailsSerie } = getDatas()
 
@@ -42,6 +43,10 @@ const Movie = () => {
     return formattedDate
   }
 
+  const backOnePage = () => {
+    navigate(-1)
+  }
+
   return (
     <>
       {details && (
@@ -57,10 +62,10 @@ const Movie = () => {
             <div className={styles.container}>
               <div className={styles.wrapper}>
                 <div>
-                  <Link to={`/`} className={styles.return}>
+                  <button onClick={backOnePage} className={styles.return}>
                     <BsArrowLeft />
                     <span className={styles.return_text}>Voltar</span>
-                  </Link>
+                  </button>
                   <img src={`${URL_IMAGE}${details?.poster_path}`} className={styles.poster_path} alt="" />
                 </div>
                 <div>
