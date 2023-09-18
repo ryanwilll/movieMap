@@ -44,13 +44,21 @@ const Home = () => {
                   name="type"
                   id="movie"
                   title="get_movies"
+                  checked={selectedType == 'get_movies' && true}
                   value={selectedType}
                 />
                 <label htmlFor="movie">
                   <span>Filmes</span>
                 </label>
 
-                <input onChange={changeSelectedType} type="radio" name="type" id="serie" title="get_series" />
+                <input
+                  onChange={changeSelectedType}
+                  type="radio"
+                  name="type"
+                  id="serie"
+                  title="get_series"
+                  checked={selectedType == 'get_series' && true}
+                />
                 <label htmlFor="serie">
                   <span>Séries</span>
                 </label>
