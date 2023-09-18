@@ -4,14 +4,17 @@
 }
 
 .container {
-  font-size: 4rem;
+  min-height: 100vh;
+  max-width: 95%;
   height: 100%;
+
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: center;
   color: #fff;
-  position: relative;
-  max-width: 95%;
+  font-size: 4rem;
+
   margin: 0 auto;
   padding-top: 10rem;
   padding-bottom: 5rem;
