@@ -11,6 +11,7 @@ const VITE_URL_UPCOMING = import.meta.env.VITE_URL_UPCOMING
 
 const VITE_URL_SERIE = import.meta.env.VITE_URL_SERIE
 const VITE_URL_SERIE_DETAILS = import.meta.env.VITE_URL_SERIE_DETAILS
+const VITE_URL_SERIE_MOVIE = import.meta.env.VITE_URL_SERIE_MOVIE
 
 const VITE_SEARCH = import.meta.env.VITE_SEARCH
 const URL_EMCINEMAS = import.meta.env.VITE_NOW_PLAYING
@@ -55,6 +56,9 @@ const getDatas = () => {
           break
         case 'get_movie_video':
           getMovieVideo(item_id)
+          break
+        case 'get_serie_video':
+          getSerieVideo(item_id)
           break
         default:
           break
@@ -104,12 +108,10 @@ const getDatas = () => {
 
   const getMovieDetails = async (movie_id: number) => {
     setLoading(true)
-    console.log(movie_id)
     axios
       .get(`${VITE_URL_MOVIE_DETAILS}${movie_id}?${VITE_API_KEY}&language=pt-BR`)
       .then((res) => {
         setDetailsMovie(res.data)
-        console.log(res.data)
       })
       .catch((err) => {
         setError('😣 Houve um erro ao buscar as séries. Por favor, tente novamente mais tarde.')
@@ -122,12 +124,10 @@ const getDatas = () => {
 
   const getSerieDetails = async (serie_id: number) => {
     setLoading(true)
-    console.log(serie_id)
     axios
       .get(`${VITE_URL_SERIE_DETAILS}${serie_id}?${VITE_API_KEY}&language=pt-BR`)
       .then((res) => {
         setDetailsSerie(res.data)
-        console.log(res.data)
       })
       .catch((err) => {
         setError('😣 Houve um erro ao buscar as séries. Por favor, tente novamente mais tarde.')
@@ -141,9 +141,61 @@ const getDatas = () => {
   const getMovieVideo = async (movie_id: number) => {
     setLoading(true)
     axios
-      .get(`${VITE_URL_MOVIE}${movie_id}/videos?${VITE_API_KEY}&language=pt-BR`)
+      .get(`${VITE_URL_MOVIE}${movie_id}/videos?${VITE_API_KEY}&include_video_language=pt-BR%2C%20en-US`)
       .then((res) => {
-        setVideoInfo(res.data.results)
+        const videosByLanguage: any = {}
+
+        for (const video of res.data.results) {
+          const language = video.iso_639_1
+          if (!videosByLanguage[language]) {
+            videosByLanguage[language] = []
+          }
+          videosByLanguage[language].push(video)
+        }
+
+        const videosPtBr = videosByLanguage['pt']
+        const videosEnUs = videosByLanguage['en']
+
+        if (videosPtBr) {
+          setVideoInfo(videosPtBr)
+        } else {
+          setVideoInfo(videosEnUs)
+        }
+      })
+      .catch((err) => {
+        setError('😣 Houve um erro ao buscar as séries. Por favor, tente novamente mais tarde.')
+        console.error(err)
+        setVideoInfo(undefined)
+      })
+      .finally(() => setLoading(false))
+
+    return
+  }
+
+  const getSerieVideo = async (serie_id: number) => {
+    setLoading(true)
+    axios
+      .get(`${VITE_URL_SERIE_MOVIE}${serie_id}/videos?${VITE_API_KEY}&include_video_language=pt-BR%2C%20en-US`)
+      .then((res) => {
+        const videosByLanguage: any = {}
+
+        for (const video of res.data.results) {
+          const language = video.iso_639_1
+          if (!videosByLanguage[language]) {
+            videosByLanguage[language] = []
+          }
+          videosByLanguage[language].push(video)
+        }
+
+        const videosPtBr = videosByLanguage['pt']
+        const videosEnUs = videosByLanguage['en']
+
+        if (videosPtBr) {
+          setVideoInfo(videosPtBr)
+          return
+        } else {
+          setVideoInfo(videosEnUs)
+        }
       })
       .catch((err) => {
         setError('😣 Houve um erro ao buscar as séries. Por favor, tente novamente mais tarde.')
