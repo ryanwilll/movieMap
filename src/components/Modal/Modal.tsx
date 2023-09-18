@@ -26,8 +26,15 @@ export const Modal = ({ isOpen, item_id, type, setIsOpen }: Props) => {
       body!.style.overflowY = 'scroll'
     }
 
-    if (type === 'movie') {
-      getMoviesOrSeries('get_movie_video', item_id)
+    switch (type) {
+      case 'movie':
+        getMoviesOrSeries('get_movie_video', item_id)
+        break
+      case 'serie':
+        getMoviesOrSeries('get_serie_video', item_id)
+        break
+      default:
+        return
     }
   }, [isOpen])
 
@@ -42,7 +49,7 @@ export const Modal = ({ isOpen, item_id, type, setIsOpen }: Props) => {
         animate={{ y: 0, opacity: 1 }}
         onClick={(e) => e.stopPropagation()}
         className={styles.modal_container}>
-        {videoInfo?.length <= 0 ? (
+        {videoInfo && videoInfo?.length <= 0 ? (
           <h1>Não foi possível encontrar um trailer em PT-BR</h1>
         ) : (
           <iframe
