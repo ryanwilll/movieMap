@@ -5,7 +5,7 @@
 
 .container {
   font-size: 4rem;
-  height: 100vh;
+  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -13,6 +13,8 @@
   position: relative;
   max-width: 95%;
   margin: 0 auto;
+  padding-top: 10rem;
+  padding-bottom: 5rem;
 }
 
 .return {
@@ -52,6 +54,10 @@
   line-height: 6rem;
 }
 
+.wrapper img {
+  max-width: 300px;
+}
+
 .wrapper .wrapper_disponivel {
   text-transform: uppercase;
   color: #b0dc00;
@@ -64,10 +70,18 @@
 
 .wrapper_container {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  gap: 5rem;
   font-size: 2rem;
   margin-top: 1rem;
+}
+
+.wrapper_container p {
+  margin-right: 2rem;
+}
+
+.wrapper_container p:nth-child(1) {
+  margin: 0 2.5rem 0 0;
 }
 
 .wrapper_type {
@@ -155,6 +169,6 @@
 }
 
 .overview {
-  font-size: 2.5rem;
+  font-size: 2rem;
   line-height: 4rem;
 }

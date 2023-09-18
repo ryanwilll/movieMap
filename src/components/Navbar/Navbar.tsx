@@ -23,10 +23,10 @@ function Navbar() {
 
   return (
     <nav className={styles.navbar}>
-      <div className={styles.container}>
+      <Link to="/" className={styles.container}>
         <img src={logoTipo} alt="Logo tipo da página" />
         <h2>MovieMap</h2>
-      </div>
+      </Link>
       <div className={styles.container}>
         <Link to="/">Home</Link>
         <span className={styles.divider} />

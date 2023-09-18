@@ -1,4 +1,5 @@
 import { Link, useParams } from 'react-router-dom'
+
 import { useEffect, useState } from 'react'
 import { getDatas } from '../../services/api'
 
@@ -40,6 +41,7 @@ const Movie = () => {
 
     return formattedDate
   }
+
   return (
     <>
       {details && (
@@ -53,12 +55,12 @@ const Movie = () => {
           }>
           <div className={styles.overlay}>
             <div className={styles.container}>
-              <Link to="/" className={styles.return}>
-                <BsArrowLeft />
-                <span className={styles.return_text}>Voltar</span>
-              </Link>
               <div className={styles.wrapper}>
                 <div>
+                  <Link to={`/`} className={styles.return}>
+                    <BsArrowLeft />
+                    <span className={styles.return_text}>Voltar</span>
+                  </Link>
                   <img src={`${URL_IMAGE}${details?.poster_path}`} className={styles.poster_path} alt="" />
                 </div>
                 <div>
@@ -95,11 +97,15 @@ const Movie = () => {
                     </p>
                   </div>
                   <div className={styles.wrapper_options}>
-                    <p className={styles.wrapper_share}>
+                    <p
+                      className={styles.wrapper_share}
+                      onClick={() => {
+                        navigator.clipboard.writeText(window.location.href)
+                      }}>
                       <LuShare2 />
                     </p>
                     <p className={styles.wrapper_avarage}>
-                      <AiFillStar /> <span>{details.vote_average.toFixed(2)}</span>
+                      <AiFillStar /> <span>{details.vote_average.toFixed(1)}</span>
                     </p>
                     <button onClick={() => setIsOpen(true)} className={styles.wrapper_watch}>
                       <BsFillPlayFill /> <span>Assistir trailer</span>
