@@ -9,17 +9,17 @@ import 'react-loading-skeleton/dist/skeleton.css'
 import { getDatas } from '../../services/api'
 
 const Home = () => {
-  const { loading, getMoviesOrSeries, error, response, remainingMovies } = getDatas()
+  const { loading, getMoviesOrSeries, error, response, remainingResponse } = getDatas()
   const [selectedType, setSelectedType] = useState<string>('get_movies')
   const [selectedPage, setSelectedPage] = useState<number>(1)
-
-  useEffect(() => {
-    getMoviesOrSeries(selectedType, selectedPage)
-  }, [selectedType, selectedPage])
 
   const changeSelectedType = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSelectedType(e.target.title)
   }
+
+  useEffect(() => {
+    getMoviesOrSeries(selectedType, selectedPage)
+  }, [selectedType, selectedPage])
 
   return (
     <SkeletonTheme baseColor="#202020" highlightColor="#444">
@@ -80,7 +80,7 @@ const Home = () => {
               {error ? (
                 <p className={styles.error}>{error}</p>
               ) : (
-                remainingMovies.map((movie) => (
+                remainingResponse.map((movie) => (
                   <SimpleCard key={movie.id} type={selectedType} id={movie.id} title={movie.title} poster={movie.poster_path} />
                 ))
               )}

@@ -97,14 +97,25 @@
   row-gap: 3rem;
   column-gap: 8px;
   padding-bottom: 10rem;
-  justify-content: space-between;
+  justify-content: center;
   gap: 2rem;
+  position: relative;
+}
+
+.movies::before {
+  content: '';
+  height: 2px;
+  width: 100%;
+  background: #2e2e2e;
+  position: absolute;
+  bottom: 5rem;
+  left: 0;
 }
 
 .simpleMovie {
   padding: 0 0 5rem 0;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: center;
   gap: 2rem;
 }
 

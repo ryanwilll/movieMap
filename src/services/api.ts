@@ -26,7 +26,7 @@ type videoInfo = {
 const getDatas = () => {
   const [loading, setLoading] = useState<boolean>(false)
   const [response, setResponse] = useState<IMovies[]>([])
-  const [remainingMovies, setRemainingMovies] = useState<IMovies[]>([])
+  const [remainingResponse, setRemainingResponse] = useState<IMovies[]>([])
   const [error, setError] = useState<string>('')
 
   const [detailsMovie, setDetailsMovie] = useState<IMoviesDetails>()
@@ -74,13 +74,13 @@ const getDatas = () => {
         const results = res.data.results.slice(0, 6)
         const remaining = res.data.results.slice(6, -2)
         setResponse(results)
-        setRemainingMovies(remaining)
+        setRemainingResponse(remaining)
       })
       .catch((err) => {
         setError('😣 Houve um erro ao buscar as séries. Por favor, tente novamente mais tarde.')
         console.error(err)
         setResponse([])
-        setRemainingMovies([])
+        setRemainingResponse([])
       })
       .finally(() => setLoading(false))
     return
@@ -94,13 +94,13 @@ const getDatas = () => {
         const results = res.data.results.slice(0, 6)
         const remaining = res.data.results.slice(6, -2)
         setResponse(results)
-        setRemainingMovies(remaining)
+        setRemainingResponse(remaining)
       })
       .catch((err) => {
         setError('😣 Houve um erro ao buscar as séries. Por favor, tente novamente mais tarde.')
         console.error(err)
         setResponse([])
-        setRemainingMovies([])
+        setRemainingResponse([])
       })
       .finally(() => setLoading(false))
     return
@@ -207,7 +207,7 @@ const getDatas = () => {
     return
   }
 
-  return { response, remainingMovies, detailsMovie, videoInfo, detailsSerie, error, loading, getMoviesOrSeries }
+  return { response, remainingResponse, detailsMovie, videoInfo, detailsSerie, error, loading, getMoviesOrSeries }
 }
 
 export { getDatas }
