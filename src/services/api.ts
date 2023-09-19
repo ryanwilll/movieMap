@@ -42,10 +42,10 @@ const getDatas = () => {
       setVideoInfo(undefined)
 
       switch (type) {
-        case 'get_movies':
+        case 'movie':
           fetchMovies(page)
           break
-        case 'get_series':
+        case 'tv':
           fetchSeries(page)
           break
         case 'get_movie_details':

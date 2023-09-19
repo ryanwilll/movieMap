@@ -1,7 +1,6 @@
-import { Link, useNavigate, useParams } from 'react-router-dom'
-
+import { useNavigate, useParams } from 'react-router-dom'
 import { useEffect, useState } from 'react'
-import { getDatas } from '../../services/api'
+import useFetch from '../../hooks/useFetch'
 
 import { BsArrowLeft } from 'react-icons/bs'
 import { MdOutlineHighQuality } from 'react-icons/md'
@@ -19,20 +18,12 @@ import { Modal } from '../../components/Modal/Modal'
 const URL_IMAGE = import.meta.env.VITE_IMG_DETAILS
 
 const Movie = () => {
+  const [isOpen, setIsOpen] = useState<boolean>(false)
   const { id, type } = useParams()
   const navigate = useNavigate()
-  const [isOpen, setIsOpen] = useState<boolean>(false)
-  const { loading, getMoviesOrSeries, error, detailsMovie, detailsSerie } = getDatas()
+  const { data, loading, error } = useFetch(`/${type == 'movie' ? 'movie' : 'tv'}/${id}&language=pt-BR`)
 
-  const details = type === 'movie' ? detailsMovie : detailsSerie
-
-  useEffect(() => {
-    if (type === 'movie') {
-      getMoviesOrSeries('get_movie_details', Number(id))
-    } else if (type === 'serie') {
-      getMoviesOrSeries('get_serie_details', Number(id))
-    }
-  }, [])
+  console.log(data)
 
   const formatedDate = (data: string) => {
     const date = new Date(data)
@@ -43,17 +34,13 @@ const Movie = () => {
     return formattedDate
   }
 
-  const backOnePage = () => {
-    navigate(-1)
-  }
-
   return (
     <>
-      {details && (
+      {data && (
         <div
           style={
-            details && {
-              background: `url(${URL_IMAGE}${details.backdrop_path}) no-repeat`,
+            data && {
+              background: `url(${URL_IMAGE}${data?.backdrop_path}) no-repeat`,
               backgroundPosition: 'center',
               backgroundSize: 'cover',
             }
@@ -62,43 +49,43 @@ const Movie = () => {
             <div className={styles.container}>
               <div className={styles.wrapper}>
                 <div>
-                  <button onClick={backOnePage} className={styles.return}>
+                  <button onClick={() => navigate(-1)} className={styles.return}>
                     <BsArrowLeft />
                     <span className={styles.return_text}>Voltar</span>
                   </button>
-                  <img src={`${URL_IMAGE}${details?.poster_path}`} className={styles.poster_path} alt="" />
+                  <img src={`${URL_IMAGE}${data?.poster_path}`} className={styles.poster_path} alt="" />
                 </div>
                 <div>
                   <p className={styles.wrapper_disponivel}>Disponível nos streamings</p>
-                  <h3 className={styles.wrapper_movieName}>{details.title || details.name},</h3>
+                  <h3 className={styles.wrapper_movieName}>{data?.title || data?.name},</h3>
                   <div className={styles.wrapper_container}>
                     <p className={styles.wrapper_type}>{type === 'movie' ? 'Filme' : 'Série'}</p>
                     <p className={styles.wrapper_icons}>
                       <MdOutlineHighQuality />
                     </p>
-                    <p>{details.genres.map((gen) => gen.name).join(', ')}</p>
-                    {details.runtime && (
+                    <p>{data?.genres.map((gen) => gen.name).join(', ')}</p>
+                    {data.runtime && (
                       <p className={styles.wrapper_icons}>
                         <PiTimer />
-                        <span>{details.runtime} min</span>
+                        <span>{data.runtime} min</span>
                       </p>
                     )}
-                    {details.number_of_episodes && (
+                    {data.number_of_episodes && (
                       <>
                         <p className={styles.wrapper_icons}>
                           <CiYoutube />
-                          <span>{details.number_of_seasons} temporadas</span>
+                          <span>{data.number_of_seasons} temporadas</span>
                         </p>
                         <p className={styles.wrapper_icons}>
                           <BsPlayCircle />
-                          <span>{details.number_of_episodes} episódios</span>
+                          <span>{data.number_of_episodes} episódios</span>
                         </p>
                       </>
                     )}
                     <p className={styles.wrapper_icons}>
                       <LuCalendarDays />
-                      {details.release_date && <span>{formatedDate(details.release_date)}</span>}
-                      {details.first_air_date && <span>{formatedDate(details.first_air_date)}</span>}
+                      {data.release_date && <span>{formatedDate(data.release_date)}</span>}
+                      {data.first_air_date && <span>{formatedDate(data.first_air_date)}</span>}
                     </p>
                   </div>
                   <div className={styles.wrapper_options}>
@@ -110,20 +97,20 @@ const Movie = () => {
                       <LuShare2 />
                     </p>
                     <p className={styles.wrapper_avarage}>
-                      <AiFillStar /> <span>{details.vote_average.toFixed(1)}</span>
+                      <AiFillStar /> <span>{data.vote_average.toFixed(1)}</span>
                     </p>
                     <button onClick={() => setIsOpen(true)} className={styles.wrapper_watch}>
                       <BsFillPlayFill /> <span>Assistir trailer</span>
                     </button>
                   </div>
                   <div>
-                    <p className={styles.overview}>{details.overview}</p>
+                    <p className={styles.overview}>{data.overview}</p>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-          <Modal isOpen={isOpen} setIsOpen={setIsOpen} item_id={details.id} type={type} />
+          <Modal isOpen={isOpen} setIsOpen={setIsOpen} item_id={data.id} type={type} />
         </div>
       )}
       {error && <p className={styles.error}>{error}</p>}
