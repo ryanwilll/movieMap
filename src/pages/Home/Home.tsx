@@ -2,17 +2,19 @@ import styles from './Home.module.css'
 import MovieCard from '../../components/MovieCard/MovieCard'
 import SimpleCard from '../../components/SimpleCard/SimpleCard'
 import Footer from '../../components/Footer/Footer'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useContext } from 'react'
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
 
+import { MoviesContext } from '../../context/MoviesContext'
 import { getDatas } from '../../services/api'
 
 const Home = () => {
+  const { addTopMovies, addRemainingMovies, topMovies, remainingMovies } = useContext(MoviesContext)
+
   const { loading, getMoviesOrSeries, error, response, remainingResponse } = getDatas()
   const [selectedType, setSelectedType] = useState<string>('get_movies')
   const [selectedPage, setSelectedPage] = useState<number>(1)
-
   const changeSelectedType = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSelectedType(e.target.title)
   }
@@ -20,6 +22,15 @@ const Home = () => {
   useEffect(() => {
     getMoviesOrSeries(selectedType, selectedPage)
   }, [selectedType, selectedPage])
+
+  useEffect(() => {
+    if (response.length > 0) {
+      addTopMovies(response)
+      addRemainingMovies(remainingResponse)
+      console.log(topMovies)
+    }
+  }, [response])
+  console.log(response)
 
   return (
     <SkeletonTheme baseColor="#202020" highlightColor="#444">
@@ -68,7 +79,8 @@ const Home = () => {
               {error ? (
                 <p className={styles.error}>{error}</p>
               ) : (
-                response.map((movie) => (
+                topMovies &&
+                topMovies.map((movie) => (
                   <MovieCard
                     type={selectedType}
                     key={movie.id}
@@ -88,7 +100,8 @@ const Home = () => {
               {error ? (
                 <p className={styles.error}>{error}</p>
               ) : (
-                remainingResponse.map((movie) => (
+                remainingMovies &&
+                remainingMovies.map((movie) => (
                   <SimpleCard key={movie.id} type={selectedType} id={movie.id} title={movie.title} poster={movie.poster_path} />
                 ))
               )}
