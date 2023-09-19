@@ -32,7 +32,7 @@ const MovieCard = ({ id, title, poster, date, averange, type }: Props) => {
 
   return (
     <>
-      <Link to={type == 'get_movies' ? `movie/details/${id}` : `serie/details/${id}`} className={styles.container}>
+      <Link to={type == 'movie' ? `movie/details/${id}` : `serie/details/${id}`} className={styles.container}>
         <img src={`${URL_IMAGE}${poster}`} alt={`Imagem ilustrativa do filme ${title}`} />
         <div className={styles.wrapper}>
           <p className={styles.title}>{title}</p>

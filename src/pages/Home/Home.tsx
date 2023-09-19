@@ -1,3 +1,6 @@
+import { MoviesContext } from '../../context/MoviesContext'
+import useFetch from '../../hooks/useFetch'
+
 import styles from './Home.module.css'
 import MovieCard from '../../components/MovieCard/MovieCard'
 import SimpleCard from '../../components/SimpleCard/SimpleCard'
@@ -6,31 +9,21 @@ import { useEffect, useState, useContext } from 'react'
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
 
-import { MoviesContext } from '../../context/MoviesContext'
-import { getDatas } from '../../services/api'
-
 const Home = () => {
-  const { addTopMovies, addRemainingMovies, topMovies, remainingMovies } = useContext(MoviesContext)
-
-  const { loading, getMoviesOrSeries, error, response, remainingResponse } = getDatas()
-  const [selectedType, setSelectedType] = useState<string>('get_movies')
+  const { addTopMovies, addRemainingMovies, addLastType, lastType, topMovies, remainingMovies } = useContext(MoviesContext)
+  const [selectedType, setSelectedType] = useState<string>(lastType)
   const [selectedPage, setSelectedPage] = useState<number>(1)
+  const { data, loading, error } = useFetch(`/${selectedType}/top_rated?language=pt-BR&page=${selectedPage}`)
+
+  useEffect(() => {
+    addTopMovies(data?.slice(0, 6))
+    addRemainingMovies(data?.slice(6))
+  }, [data])
+
   const changeSelectedType = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSelectedType(e.target.title)
+    addLastType(e.target.title)
   }
-
-  useEffect(() => {
-    getMoviesOrSeries(selectedType, selectedPage)
-  }, [selectedType, selectedPage])
-
-  useEffect(() => {
-    if (response.length > 0) {
-      addTopMovies(response)
-      addRemainingMovies(remainingResponse)
-      console.log(topMovies)
-    }
-  }, [response])
-  console.log(response)
 
   return (
     <SkeletonTheme baseColor="#202020" highlightColor="#444">
@@ -46,7 +39,7 @@ const Home = () => {
             <div className={styles.lancamentos_container}>
               <div>
                 <p className={styles.lancamentos_text}>Disponíveis nos streamings online</p>
-                <h4>{selectedType == 'get_movies' ? 'Filmes lançados recentemente' : 'Séries em alta entre os espectadores'} </h4>
+                <h4>{selectedType == 'movie' ? 'Filmes lançados recentemente' : 'Séries em alta entre os espectadores'} </h4>
               </div>
               <div className={styles.lancamentos_options}>
                 <input
@@ -54,9 +47,8 @@ const Home = () => {
                   type="radio"
                   name="type"
                   id="movie"
-                  title="get_movies"
-                  checked={selectedType == 'get_movies' && true}
-                  value={selectedType}
+                  title="movie"
+                  checked={selectedType == 'movie' && true}
                 />
                 <label htmlFor="movie">
                   <span>Filmes</span>
@@ -67,8 +59,8 @@ const Home = () => {
                   type="radio"
                   name="type"
                   id="serie"
-                  title="get_series"
-                  checked={selectedType == 'get_series' && true}
+                  title="tv"
+                  checked={selectedType == 'tv' && true}
                 />
                 <label htmlFor="serie">
                   <span>Séries</span>
@@ -102,7 +94,7 @@ const Home = () => {
               ) : (
                 remainingMovies &&
                 remainingMovies.map((movie) => (
-                  <SimpleCard key={movie.id} type={selectedType} id={movie.id} title={movie.title} poster={movie.poster_path} />
+                  <SimpleCard type={selectedType} id={movie.id} title={movie.title} poster={movie.poster_path} />
                 ))
               )}
             </div>
