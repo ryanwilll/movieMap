@@ -1,11 +1,11 @@
 import { ReactNode, createContext, useState } from 'react'
-import { IMovies } from '../types/IMovies'
+import { IMoviesDetails } from '../types/IMoviesDetails'
 
 type ThemeContextProps = {
   children?: ReactNode
   lastType: string
-  topMovies?: IMovies[]
-  remainingMovies?: IMovies[]
+  topMovies?: IMoviesDetails[]
+  remainingMovies?: IMoviesDetails[]
   addTopMovies?: any
   addRemainingMovies?: any
   addLastType?: any

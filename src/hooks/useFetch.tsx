@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react'
 import { fetchDataFromAPI } from '../utils/api'
 import { IMoviesDetails } from '../types/IMoviesDetails'
-import { IMovies } from '../types/IMovies'
 
 const useFetch = (url: string) => {
   const [loading, setLoading] = useState<boolean>(false)
@@ -14,7 +13,9 @@ const useFetch = (url: string) => {
     console.log(url)
     fetchDataFromAPI(url)
       .then((res) => {
-        setData(res.results ? res.results : res)
+        console.log(typeof res)
+
+        setData(res)
       })
       .catch((err) => {
         setError(true)
