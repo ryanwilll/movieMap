@@ -1,7 +1,7 @@
 import { createPortal } from 'react-dom'
 import { useEffect } from 'react'
 import { motion } from 'framer-motion'
-import { MdClose } from 'react-icons/md'
+import useFetch from '../../hooks/useFetch'
 
 import styles from './Modal.module.css'
 
@@ -12,10 +12,11 @@ type Props = {
   setIsOpen: Function
 }
 
-import { getDatas } from '../../services/api'
-
 export const Modal = ({ isOpen, item_id, type, setIsOpen }: Props) => {
-  const { getMoviesOrSeries, videoInfo } = getDatas()
+  // Chamar a API aqui
+  const { data } = useFetch(`/${type}/${item_id}/videos?language=pt-BR`)
+
+  console.log(data)
 
   useEffect(() => {
     const body = document.querySelector('body')
@@ -24,17 +25,6 @@ export const Modal = ({ isOpen, item_id, type, setIsOpen }: Props) => {
       body!.style.overflowY = 'hidden'
     } else {
       body!.style.overflowY = 'scroll'
-    }
-
-    switch (type) {
-      case 'movie':
-        getMoviesOrSeries('get_movie_video', item_id)
-        break
-      case 'serie':
-        getMoviesOrSeries('get_serie_video', item_id)
-        break
-      default:
-        return
     }
   }, [isOpen])
 
@@ -49,7 +39,7 @@ export const Modal = ({ isOpen, item_id, type, setIsOpen }: Props) => {
         animate={{ y: 0, opacity: 1 }}
         onClick={(e) => e.stopPropagation()}
         className={styles.modal_container}>
-        {videoInfo && videoInfo?.length <= 0 ? (
+        {!data?.results ? (
           <h1>Não foi possível encontrar um trailer em PT-BR</h1>
         ) : (
           <iframe
@@ -57,7 +47,7 @@ export const Modal = ({ isOpen, item_id, type, setIsOpen }: Props) => {
             id="ytplayer"
             typeof="text/html"
             className={styles.iframe}
-            src={`https://www.youtube.com/embed/${videoInfo?.[0].key}`}
+            src={`https://www.youtube.com/embed/${data.results?.[0]?.key}`}
           />
         )}
       </motion.div>

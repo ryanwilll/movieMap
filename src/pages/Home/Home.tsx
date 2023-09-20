@@ -13,11 +13,11 @@ const Home = () => {
   const { addTopMovies, addRemainingMovies, addLastType, lastType, topMovies, remainingMovies } = useContext(MoviesContext)
   const [selectedType, setSelectedType] = useState<string>(lastType)
   const [selectedPage, setSelectedPage] = useState<number>(1)
-  const { data, loading, error } = useFetch(`/${selectedType}/top_rated?language=pt-BR&page=${selectedPage}`)
+  const { data, loading, error } = useFetch(`/${selectedType}/popular?language=pt-BR&page=${selectedPage}`)
 
   useEffect(() => {
-    addTopMovies(data?.slice(0, 6))
-    addRemainingMovies(data?.slice(6))
+    addTopMovies(data?.results.slice(0, 6))
+    addRemainingMovies(data?.results.slice(6))
   }, [data])
 
   const changeSelectedType = (e: React.ChangeEvent<HTMLInputElement>) => {
