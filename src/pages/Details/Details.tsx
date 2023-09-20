@@ -23,8 +23,6 @@ const Movie = () => {
   const navigate = useNavigate()
   const { data, error } = useFetch(`/${type == 'movie' ? 'movie' : 'tv'}/${id}?language=pt-BR`)
 
-  console.log(data)
-
   const formatedDate = (data: string) => {
     const date = new Date(data)
     const formattedDate = date.toLocaleDateString('pt-BR', {
@@ -104,7 +102,11 @@ const Movie = () => {
                     </button>
                   </div>
                   <div>
-                    <p className={styles.overview}>{data.overview}</p>
+                    <p className={styles.overview}>
+                      {data.overview.length <= 0
+                        ? 'Ops! Ainda não temos informações sobre este filme. Por favor aguarde até que tenhamos tal overview.'
+                        : data.overview}
+                    </p>
                   </div>
                 </div>
               </div>

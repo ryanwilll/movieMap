@@ -15,7 +15,6 @@ export const fetchDataFromAPI = async (url: string, params?: string) => {
       headers,
       params,
     })
-    console.log(data.results)
     return data
   } catch (err) {
     console.error(err)

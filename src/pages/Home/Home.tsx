@@ -16,8 +16,8 @@ const Home = () => {
   const { data, loading, error } = useFetch(`/${selectedType}/popular?language=pt-BR&page=${selectedPage}`)
 
   useEffect(() => {
-    addTopMovies(data?.results.slice(0, 6))
-    addRemainingMovies(data?.results.slice(6))
+    addTopMovies(data?.results.slice(0, 5))
+    addRemainingMovies(data?.results.slice(5))
   }, [data])
 
   const changeSelectedType = (e: React.ChangeEvent<HTMLInputElement>) => {
