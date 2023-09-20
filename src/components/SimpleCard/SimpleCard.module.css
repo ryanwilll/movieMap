@@ -2,6 +2,8 @@
   object-position: top center;
   transition: ease-in-out 0.5s all;
   cursor: pointer;
+  display: flex;
+  max-width: 24rem;
 }
 
 .container img {
