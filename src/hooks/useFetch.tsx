@@ -6,7 +6,7 @@ import { IMovies } from '../types/IMovies'
 const useFetch = (url: string) => {
   const [loading, setLoading] = useState<boolean>(false)
   const [error, setError] = useState<boolean>(false)
-  const [data, setData] = useState<IMovies[] | IMoviesDetails[] | []>()
+  const [data, setData] = useState<IMoviesDetails>()
 
   useEffect(() => {
     setLoading(true)
@@ -14,7 +14,7 @@ const useFetch = (url: string) => {
     console.log(url)
     fetchDataFromAPI(url)
       .then((res) => {
-        setData(res.results ? res.results : (res as IMoviesDetails[]))
+        setData(res.results ? res.results : res)
       })
       .catch((err) => {
         setError(true)
