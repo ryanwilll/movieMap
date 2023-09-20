@@ -14,6 +14,7 @@ import { BsPlayCircle } from 'react-icons/bs'
 
 import styles from './Details.module.css'
 import { Modal } from '../../components/Modal/Modal'
+import { IMoviesDetails } from '../../types/IMoviesDetails'
 
 const URL_IMAGE = import.meta.env.VITE_IMG_DETAILS
 
@@ -21,7 +22,7 @@ const Movie = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false)
   const { id, type } = useParams()
   const navigate = useNavigate()
-  const { data, loading, error } = useFetch(`/${type == 'movie' ? 'movie' : 'tv'}/${id}&language=pt-BR`)
+  const { data, error } = useFetch(`/${type == 'movie' ? 'movie' : 'tv'}/${id}&language=pt-BR`)
 
   console.log(data)
 
