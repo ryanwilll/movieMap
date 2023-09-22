@@ -3,7 +3,7 @@ import { IMoviesDetails } from '../types/IMoviesDetails'
 
 type ThemeContextProps = {
   children?: ReactNode
-  lastType: string
+  lastType?: string
   topMovies?: IMoviesDetails[]
   remainingMovies?: IMoviesDetails[]
   addTopMovies?: any

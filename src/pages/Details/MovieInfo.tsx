@@ -1,5 +1,5 @@
 import { useNavigate, useParams } from 'react-router-dom'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import useFetch from '../../hooks/useFetch'
 
 import { BsArrowLeft } from 'react-icons/bs'
@@ -12,16 +12,23 @@ import { BsFillPlayFill } from 'react-icons/bs'
 import { CiYoutube } from 'react-icons/ci'
 import { BsPlayCircle } from 'react-icons/bs'
 
-import styles from './Details.module.css'
+import styles from './MovieInfo.module.css'
 import { Modal } from '../../components/Modal/Modal'
+import MoviesGrid from '../../components/MovieCard/MoviesGrid/MoviesGrid'
+import { IMoviesDetails } from '../../types/IMoviesDetails'
 
 const URL_IMAGE = import.meta.env.VITE_IMG_DETAILS
 
 const Movie = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false)
   const { id, type } = useParams()
-  const navigate = useNavigate()
   const { data, error } = useFetch(`/${type == 'movie' ? 'movie' : 'tv'}/${id}?language=pt-BR`)
+  const { data: dataSimilar, error: errorSimilar } = useFetch(`/${type == 'movie' ? 'movie' : 'tv'}/${id}/similar?language=pt-BR`)
+  console.log(dataSimilar)
+  console.log(`/${type == 'movie' ? 'movie' : 'tv'}/${id}/similar?language=pt-BR`)
+
+  const navigate = useNavigate()
+
   const formatedDate = (data: string) => {
     const date = new Date(data)
     const formattedDate = date.toLocaleDateString('pt-BR', {
@@ -29,6 +36,10 @@ const Movie = () => {
     })
 
     return formattedDate
+  }
+
+  const copyLink = () => {
+    return navigator.clipboard.writeText(window.location.href)
   }
 
   return (
@@ -90,11 +101,7 @@ const Movie = () => {
                       </p>
                     </div>
                     <div className={styles.wrapper_options}>
-                      <p
-                        className={styles.wrapper_share}
-                        onClick={() => {
-                          navigator.clipboard.writeText(window.location.href)
-                        }}>
+                      <p className={styles.wrapper_share} onClick={() => copyLink()}>
                         <LuShare2 />
                       </p>
                       <p className={styles.wrapper_avarage}>
@@ -115,12 +122,16 @@ const Movie = () => {
                 </div>
               </div>
             </div>
-
-            <Modal isOpen={isOpen} setIsOpen={setIsOpen} item_id={data.id} type={type} />
           </div>
-          <div>
-            <h1>ASDASDA</h1>
+          <div className={styles.overlay}>
+            {dataSimilar?.results && (
+              <>
+                <p className={styles.wrapper_disponivel}>Mais {type == 'movie' ? 'Filmes' : 'Séries'} similares</p>
+                <MoviesGrid error={errorSimilar} selectedType={'type'} topMovies={dataSimilar.results} />
+              </>
+            )}
           </div>
+          <Modal isOpen={isOpen} setIsOpen={setIsOpen} item_id={data.id} type={type} />
         </>
       )}
       {error && <p className={styles.error}>{error}</p>}

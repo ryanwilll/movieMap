@@ -1,0 +1,14 @@
+.simpleMovie {
+  padding: 2rem 0 5rem;
+  max-width: 95%;
+  margin: 0 auto;
+  font-size: 4rem;
+  /* height: 100vh; */
+
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+
+  color: #fff;
+  justify-content: center;
+}

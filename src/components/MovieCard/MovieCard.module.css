@@ -9,15 +9,14 @@
 }
 
 .container:hover {
-  scale: 1.05;
+  scale: 1.01;
 }
 
 .container img {
-  height: 100%;
   width: 100%;
   object-fit: cover;
   object-position: center;
-  max-height: 500px;
+  min-height: 40rem;
 }
 
 .wrapper {

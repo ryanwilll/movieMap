@@ -4,7 +4,7 @@ import { MoviesProvider } from './context/MoviesContext'
 import './App.css'
 import Home from './pages/Home/Home'
 import Navbar from './components/Navbar/Navbar'
-import Details from './pages/Details/Details'
+import Details from './pages/Details/MovieInfo'
 import Movies from './pages/Movies/Movies'
 
 function App() {
