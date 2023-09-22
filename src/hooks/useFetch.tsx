@@ -9,12 +9,8 @@ const useFetch = (url: string) => {
 
   useEffect(() => {
     setLoading(true)
-    console.log('entrei')
-    console.log(url)
     fetchDataFromAPI(url)
       .then((res) => {
-        console.log(typeof res)
-
         setData(res)
       })
       .catch((err) => {

@@ -4,7 +4,8 @@
   font-size: 1.5rem;
   transition: ease-in-out 0.5s all;
   cursor: pointer;
-  max-width: 24rem;
+  flex-basis: calc(20% - 2rem); /* Largura do item com margens */
+  flex-grow: 0;
 }
 
 .container:hover {
@@ -12,10 +13,11 @@
 }
 
 .container img {
+  height: 100%;
   width: 100%;
   object-fit: cover;
   object-position: center;
-  max-height: 400px;
+  max-height: 500px;
 }
 
 .wrapper {

@@ -26,12 +26,17 @@
   min-height: 93vh;
   border-radius: 2rem; /* Equivalente a rounded-2xl */
   overflow: hidden;
-  background: #444444;
   color: #fff;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   text-align: center;
+}
+
+.modal_container h2 {
+  font-size: 2rem;
+  margin-bottom: 2rem;
 }
 
 .iframe {
