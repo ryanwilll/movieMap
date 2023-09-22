@@ -13,16 +13,16 @@ type Props = {
 }
 
 export const Modal = ({ isOpen, item_id, type, setIsOpen }: Props) => {
-  // Chamar a API aqui
+  const [dublados, setDublados] = useState<any>()
+
+  //! Chamar a API aqui
   const { data: dataPtBR } = useFetch(
     `/${type == 'serie' ? 'tv' : 'movie'}/${item_id}/videos?language=pt-BR&append_to_response=videos`
   )
   const { data: dataEnUS } = useFetch(
     `/${type == 'serie' ? 'tv' : 'movie'}/${item_id}/videos?language=pt-BR&append_to_response=videos`
   )
-  const [dublados, setDublados] = useState<any>()
-  console.log(dublados)
-  console.log(dataEnUS)
+
   useEffect(() => {
     const trailersDublados = dataPtBR?.results.filter((item) => item.name.toLowerCase().includes('dublado'))
     setDublados(trailersDublados)
@@ -41,11 +41,7 @@ export const Modal = ({ isOpen, item_id, type, setIsOpen }: Props) => {
   const closeModal = () => {
     setIsOpen(false)
   }
-  console.log(
-    `https://www.youtube.com/embed/${
-      dublados?.[0]?.key ? dublados?.[0]?.key : dataEnUS?.results?.[0]?.key
-    }?rel=0&controls=1&volume=10`
-  )
+
   const content = (
     <div className={styles.modal} onClick={closeModal}>
       <motion.div
@@ -53,22 +49,19 @@ export const Modal = ({ isOpen, item_id, type, setIsOpen }: Props) => {
         animate={{ y: 0, opacity: 1 }}
         onClick={(e) => e.stopPropagation()}
         className={styles.modal_container}>
-        {!dublados || !dataEnUS?.results ? (
-          <h1>Não foi possível encontrar um trailer.</h1>
+        {dublados?.[0] && !dataEnUS?.results ? (
+          <h1 className={styles.modal_notfound}>Não foi possível encontrar um trailer.</h1>
         ) : (
           <>
-            <h2>Trailer em: {dublados ? 'Português' : 'Inglês'}</h2>
+            <h2>Trailer em: {dublados?.[0] ? 'Português' : 'Inglês'}</h2>
             <iframe
-              width="560"
-              height="315"
-              allowFullScreen={true}
-              id="ytplayer"
-              typeof="text/html"
               className={styles.iframe}
               src={`https://www.youtube.com/embed/${
-                dublados ? dublados?.[0]?.key : dataEnUS?.results?.[0]?.key
-              }?rel=0&controls=1&volume=10`}
-            />
+                dublados?.[0] ? dublados?.[0]?.key : dataEnUS?.results?.[0]?.key
+              }?si=Bz5t4-fuIGcRbOJI`}
+              title="YouTube video player"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowFullScreen={true}></iframe>
           </>
         )}
       </motion.div>
