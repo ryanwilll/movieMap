@@ -1,7 +1,10 @@
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { LuCalendarDays } from 'react-icons/lu'
 import { MdHighQuality } from 'react-icons/md'
 import { AiFillStar } from 'react-icons/ai'
+
+import noPosts from '../../assets/no-poster.png'
+
 import styles from './MovieCard.module.css'
 
 type Props = {
@@ -18,6 +21,7 @@ type Props = {
 const URL_IMAGE = import.meta.env.VITE_IMG
 
 const MovieCard = ({ id, title, poster, date, averange, type }: Props) => {
+  const navigate = useNavigate()
   const formatedDate = (data: string) => {
     const date = new Date(data)
 
@@ -33,9 +37,7 @@ const MovieCard = ({ id, title, poster, date, averange, type }: Props) => {
   return (
     <>
       <Link to={type == 'movie' ? `movie/details/${id}` : `serie/details/${id}`} className={styles.container}>
-        <div>
-          <img src={`${URL_IMAGE}${poster}`} alt={`Imagem ilustrativa do filme ${title}`} />
-        </div>
+        <img src={poster ? `${URL_IMAGE}${poster}` : noPosts} alt={`Imagem ilustrativa do filme ${title}`} />
         <div className={styles.wrapper}>
           <p className={styles.title}>{title}</p>
           <p>
@@ -50,7 +52,7 @@ const MovieCard = ({ id, title, poster, date, averange, type }: Props) => {
 
           <p className={styles.star}>
             <AiFillStar />
-            <span>{averange}</span>
+            <span>{averange.toFixed(1)}</span>
           </p>
         </div>
       </Link>

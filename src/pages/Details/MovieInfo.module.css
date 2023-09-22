@@ -70,6 +70,14 @@
   font-size: 3rem;
 }
 
+.overlay > .wrapper_disponivel {
+  padding-top: 5rem;
+  text-transform: uppercase;
+  color: #b0dc00;
+  font-size: 3rem;
+  text-align: center;
+}
+
 .wrapper .wrapper_movieName {
   font-weight: 500;
 }

@@ -2,19 +2,18 @@ import { MoviesContext } from '../../context/MoviesContext'
 import useFetch from '../../hooks/useFetch'
 
 import styles from './Home.module.css'
-import MovieCard from '../../components/MovieCard/MovieCard'
-import SimpleCard from '../../components/SimpleCard/SimpleCard'
 import Footer from '../../components/Footer/Footer'
 import { useEffect, useState, useContext } from 'react'
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
+import MoviesGrid from '../../components/MovieCard/MoviesGrid/MoviesGrid'
+import MoviesSimpleGrid from '../../components/MovieCard/MoviesSimpleGrid/MoviesSimpleGrid'
 
 const Home = () => {
   const { addTopMovies, addRemainingMovies, addLastType, lastType, topMovies, remainingMovies } = useContext(MoviesContext)
-  const [selectedType, setSelectedType] = useState<string>(lastType)
-  const [selectedPage, setSelectedPage] = useState<number>(1)
+  const [selectedType, setSelectedType] = useState<string>(lastType != undefined ? lastType : 'movie')
   const { data, loading, error } = useFetch(
-    `/${selectedType}/${selectedType == 'movie' ? 'upcoming' : 'top_rated'}?language=pt-BR&page=${selectedPage}`
+    `/${selectedType}/${selectedType == 'movie' ? 'upcoming' : 'top_rated'}?language=pt-BR&page=1`
   )
 
   useEffect(() => {
@@ -69,37 +68,8 @@ const Home = () => {
                 </label>
               </div>
             </div>
-            <div className={styles.movies}>
-              {error ? (
-                <p className={styles.error}>{error}</p>
-              ) : (
-                topMovies &&
-                topMovies.map((movie) => (
-                  <MovieCard
-                    type={selectedType}
-                    key={movie.id}
-                    id={movie.id}
-                    title={movie.title || movie.name}
-                    poster={movie.poster_path}
-                    date={movie.release_date || movie.first_air_date}
-                    duration={movie.id}
-                    averange={movie.vote_average}
-                    loading={loading}
-                  />
-                ))
-              )}
-            </div>
-
-            <div className={styles.simpleMovie}>
-              {error ? (
-                <p className={styles.error}>{error}</p>
-              ) : (
-                remainingMovies &&
-                remainingMovies.map((movie) => (
-                  <SimpleCard type={selectedType} id={movie.id} title={movie.title} poster={movie.poster_path} />
-                ))
-              )}
-            </div>
+            <MoviesGrid error={error} selectedType={selectedType} loading={loading} topMovies={topMovies} />
+            <MoviesSimpleGrid error={error} selectedType={selectedType} remainingMovies={remainingMovies} />
           </div>
         </div>
         <Footer />

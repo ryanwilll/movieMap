@@ -41,9 +41,8 @@
   z-index: 1;
 }
 
-.lancamentos_container,
-.movies,
-.simpleMovie {
+.simpleMovie,
+.lancamentos_container {
   padding-top: 10rem;
   max-width: 95%;
   margin: 0 auto;
@@ -55,7 +54,7 @@
   justify-content: center;
 }
 
-.lancamentos_container {
+.lancamentos_container.lancamentos_container {
   justify-content: space-between;
 }
 
@@ -89,32 +88,6 @@
 
 .lancamentos_options input:checked + label {
   background: #111111;
-}
-
-.movies {
-  display: flex;
-  flex-wrap: wrap;
-  padding-bottom: 10rem;
-  justify-content: center;
-  gap: 2rem;
-  position: relative;
-}
-
-.movies::before {
-  content: '';
-  height: 2px;
-  width: 100%;
-  background: #2e2e2e;
-  position: absolute;
-  bottom: 5rem;
-  left: 0;
-}
-
-.simpleMovie {
-  padding: 0 0 5rem 0;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 2rem;
 }
 
 .error {
