@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+
 import { fetchDataFromAPI } from '../utils/api'
 import { IMoviesDetails } from '../types/IMoviesDetails'
 

@@ -70,14 +70,6 @@
   font-size: 3rem;
 }
 
-.overlay > .wrapper_disponivel {
-  padding-top: 5rem;
-  text-transform: uppercase;
-  color: #b0dc00;
-  font-size: 3rem;
-  text-align: center;
-}
-
 .wrapper .wrapper_movieName {
   font-weight: 500;
 }
@@ -186,4 +178,30 @@
   font-size: 2rem;
   line-height: 4rem;
   width: 70%;
+}
+
+.similar_movies .wrapper_disponivel {
+  padding: 5rem 0;
+  text-transform: uppercase;
+  color: #b0dc00;
+  font-size: 3rem;
+  text-align: center;
+}
+
+.similar_movies {
+  background-color: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(1px);
+}
+
+.movies {
+  max-width: 80%;
+  margin: 0 auto;
+  font-size: 4rem;
+  flex-wrap: wrap;
+  gap: 2rem;
+  display: flex;
+  color: #fff;
+  justify-content: center;
+  position: relative;
+  padding-bottom: 5rem;
 }

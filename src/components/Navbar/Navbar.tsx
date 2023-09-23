@@ -1,24 +1,25 @@
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { BiSearch, BiWorld } from 'react-icons/bi'
-import logoTipo from '/Vector.svg'
 
+import logoTipo from '/Vector.svg'
 import styles from './Navbar.module.css'
 
 function Navbar() {
+  const [query, setQuery] = useState<string>('')
   const showInputSearch = (e: any) => {
     e.preventDefault()
-    const inputSearch = document.querySelector(`.${styles.hidden}`)
 
+    const inputSearch = document.querySelector(`.${styles.hidden}`)
     if (inputSearch) {
       inputSearch.classList.remove(`${styles.hidden}`)
       return
     }
-
     sendSearch()
   }
 
   const sendSearch = () => {
-    console.log('pesquisando')
+    console.log('Enviando a pesquisa: ' + query)
   }
 
   return (
@@ -30,15 +31,13 @@ function Navbar() {
       <div className={styles.container}>
         <Link to="/">Home</Link>
         <span className={styles.divider} />
-        <Link to="/">Movies</Link>
+        <Link to="/movies">Movies</Link>
         <span className={styles.divider} />
-        <Link to="/">TV Show</Link>
-        <span className={styles.divider} />
-        <Link to="/">Web Series</Link>
+        <Link to="/series">Séries</Link>
       </div>
       <div className={styles.container}>
         <form className={styles.container}>
-          <input type="text" name="search" id="search" className={styles.hidden} />
+          <input type="text" name="search" id="search" className={styles.hidden} onChange={(e) => setQuery(e.target.value)} />
           <button onClick={showInputSearch}>
             <BiSearch />
           </button>

@@ -6,8 +6,9 @@ import Footer from '../../components/Footer/Footer'
 import { useEffect, useState, useContext } from 'react'
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
-import MoviesGrid from '../../components/MovieCard/MoviesGrid/MoviesGrid'
-import MoviesSimpleGrid from '../../components/MovieCard/MoviesSimpleGrid/MoviesSimpleGrid'
+import SimpleCard from '../../components/SimpleCard/SimpleCard'
+import MovieCard from '../../components/MovieCard/MovieCard'
+import { IMoviesDetails } from '../../types/IMoviesDetails'
 
 const Home = () => {
   const { addTopMovies, addRemainingMovies, addLastType, lastType, topMovies, remainingMovies } = useContext(MoviesContext)
@@ -68,8 +69,36 @@ const Home = () => {
                 </label>
               </div>
             </div>
-            <MoviesGrid error={error} selectedType={selectedType} loading={loading} topMovies={topMovies} />
-            <MoviesSimpleGrid error={error} selectedType={selectedType} remainingMovies={remainingMovies} />
+            <div className={styles.movies}>
+              {error ? (
+                <p className={styles.error}>{error}</p>
+              ) : (
+                topMovies &&
+                topMovies.map((movie: IMoviesDetails) => (
+                  <MovieCard
+                    type={selectedType ?? ''}
+                    key={movie.id}
+                    id={movie.id}
+                    title={movie.title || movie.name}
+                    poster={movie.poster_path}
+                    date={movie.release_date || movie.first_air_date}
+                    duration={movie.id}
+                    averange={movie.vote_average}
+                    loading={loading ?? false}
+                  />
+                ))
+              )}
+            </div>
+            <div className={styles.simpleMovie}>
+              {error ? (
+                <p className={styles.error}>{error}</p>
+              ) : (
+                remainingMovies &&
+                remainingMovies.map((movie) => (
+                  <SimpleCard key={movie.id} type={selectedType} id={movie.id} title={movie.title} poster={movie.poster_path} />
+                ))
+              )}
+            </div>
           </div>
         </div>
         <Footer />

@@ -1,7 +1,15 @@
+//* Hooks
 import { useNavigate, useParams } from 'react-router-dom'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import useFetch from '../../hooks/useFetch'
 
+//* Componentes
+import { Modal } from '../../components/Modal/Modal'
+import { IMoviesDetails } from '../../types/IMoviesDetails'
+import MovieCard from '../../components/MovieCard/MovieCard'
+import Footer from '../../components/Footer/Footer'
+
+//* Estilização
 import { BsArrowLeft } from 'react-icons/bs'
 import { MdOutlineHighQuality } from 'react-icons/md'
 import { PiTimer } from 'react-icons/pi'
@@ -11,30 +19,26 @@ import { AiFillStar } from 'react-icons/ai'
 import { BsFillPlayFill } from 'react-icons/bs'
 import { CiYoutube } from 'react-icons/ci'
 import { BsPlayCircle } from 'react-icons/bs'
-
-import styles from './MovieInfo.module.css'
-import { Modal } from '../../components/Modal/Modal'
-import MoviesGrid from '../../components/MovieCard/MoviesGrid/MoviesGrid'
-import { IMoviesDetails } from '../../types/IMoviesDetails'
+import styles from './Details.module.css'
 
 const URL_IMAGE = import.meta.env.VITE_IMG_DETAILS
 
 const Movie = () => {
+  const navigate = useNavigate()
   const [isOpen, setIsOpen] = useState<boolean>(false)
   const { id, type } = useParams()
   const { data, error } = useFetch(`/${type == 'movie' ? 'movie' : 'tv'}/${id}?language=pt-BR`)
   const { data: dataSimilar, error: errorSimilar } = useFetch(`/${type == 'movie' ? 'movie' : 'tv'}/${id}/similar?language=pt-BR`)
-  console.log(dataSimilar)
-  console.log(`/${type == 'movie' ? 'movie' : 'tv'}/${id}/similar?language=pt-BR`)
 
-  const navigate = useNavigate()
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [id])
 
   const formatedDate = (data: string) => {
     const date = new Date(data)
     const formattedDate = date.toLocaleDateString('pt-BR', {
       year: 'numeric',
     })
-
     return formattedDate
   }
 
@@ -52,7 +56,6 @@ const Movie = () => {
                 background: `url(${URL_IMAGE}${data?.backdrop_path}) no-repeat`,
                 backgroundPosition: 'center',
                 backgroundSize: 'cover',
-
                 height: '100%',
                 width: '100%',
               }
@@ -96,8 +99,7 @@ const Movie = () => {
                       )}
                       <p className={styles.wrapper_icons}>
                         <LuCalendarDays />
-                        {data.release_date && <span>{formatedDate(data.release_date)}</span>}
-                        {data.first_air_date && <span>{formatedDate(data.first_air_date)}</span>}
+                        <span>{data.release_date ? formatedDate(data.release_date) : formatedDate(data.first_air_date)}</span>
                       </p>
                     </div>
                     <div className={styles.wrapper_options}>
@@ -123,14 +125,31 @@ const Movie = () => {
               </div>
             </div>
           </div>
-          <div className={styles.overlay}>
-            {dataSimilar?.results && (
+          <div className={styles.similar_movies}>
+            {dataSimilar?.results && type ? (
               <>
                 <p className={styles.wrapper_disponivel}>Mais {type == 'movie' ? 'Filmes' : 'Séries'} similares</p>
-                <MoviesGrid error={errorSimilar} selectedType={'type'} topMovies={dataSimilar.results} />
+                <div className={styles.movies}>
+                  {dataSimilar.results.map((movie: IMoviesDetails) => (
+                    <MovieCard
+                      loading={false}
+                      type={type}
+                      key={movie.id}
+                      id={movie.id}
+                      title={movie.title || movie.name}
+                      poster={movie.poster_path}
+                      date={movie.release_date || movie.first_air_date}
+                      duration={movie.id}
+                      averange={movie.vote_average}
+                    />
+                  ))}
+                </div>
               </>
+            ) : (
+              <p>Ocorreu um erro ao tentar carregar os itens similares. Por favor, tente novamente mais tarde. {errorSimilar}</p>
             )}
           </div>
+          <Footer />
           <Modal isOpen={isOpen} setIsOpen={setIsOpen} item_id={data.id} type={type} />
         </>
       )}
