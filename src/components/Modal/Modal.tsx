@@ -1,5 +1,5 @@
 import { createPortal } from 'react-dom'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { motion } from 'framer-motion'
 import useFetch from '../../hooks/useFetch'
 
@@ -16,7 +16,13 @@ export const Modal = ({ isOpen, item_id, type, setIsOpen }: Props) => {
   //! Chamar a API aqui
   const { data: dataPtBR } = useFetch(`/${type == 'serie' ? 'tv' : 'movie'}/${item_id}/videos?language=pt-BR`)
   const { data: dataEnUS } = useFetch(`/${type == 'serie' ? 'tv' : 'movie'}/${item_id}/videos?language=en-US`)
-  const trailersDublados = dataPtBR?.results.filter((item) => item.name.toLowerCase().includes('dublado'))
+
+  const trailersDublados = dataPtBR?.results.filter((item) => {
+    if (item.name.toLowerCase().includes('dublado')) {
+      return item.name.toLowerCase().includes('dublado')
+    }
+    item.iso_639_1.toLowerCase().includes('pt') && item.iso_3166_1.toLowerCase().includes('br')
+  })
 
   useEffect(() => {
     const body = document.querySelector('body')

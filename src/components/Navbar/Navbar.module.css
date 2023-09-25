@@ -93,11 +93,11 @@
   color: #ccc;
 }
 
-/* .container form input.hidden {
+.container form input.hidden {
   width: 0px;
-  padding: 0 1rem;
+  padding: 0.5rem 0rem;
   visibility: hidden;
-} */
+}
 
 .container form button {
   border: none;

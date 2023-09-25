@@ -24,6 +24,7 @@ const MovieCard = ({ id, title, poster, date, averange, type }: Props) => {
   const navigate = useNavigate()
   const formatedDate = (data: string) => {
     const date = new Date(data)
+
     const formattedDate = date.toLocaleDateString('pt-BR', {
       day: '2-digit',
       month: '2-digit',
@@ -32,10 +33,16 @@ const MovieCard = ({ id, title, poster, date, averange, type }: Props) => {
     return formattedDate
   }
 
+  const formatedNumber = (averange: number) => {
+    if (averange !== undefined) {
+      return averange.toFixed(1)
+    }
+  }
+
   const goToDetailsPage = () => {
     navigate(type == 'movie' ? `/movie/details/${id}` : `/serie/details/${id}`)
   }
-  console.log(type)
+
   return (
     <>
       <div onClick={() => goToDetailsPage()} className={styles.container}>
@@ -54,7 +61,7 @@ const MovieCard = ({ id, title, poster, date, averange, type }: Props) => {
 
           <p className={styles.star}>
             <AiFillStar />
-            <span>{averange.toFixed(1)}</span>
+            <span>{formatedNumber(averange)}</span>
           </p>
         </div>
       </div>
