@@ -1,6 +1,6 @@
 import { useState, FormEvent } from 'react'
 import { Link } from 'react-router-dom'
-import { BiSearch, BiWorld } from 'react-icons/bi'
+import { BiSearch } from 'react-icons/bi'
 import { BsX } from 'react-icons/bs'
 
 import logoTipo from '/Vector.svg'
@@ -27,9 +27,9 @@ function Navbar() {
         <h2>MovieMap</h2>
       </Link>
       <div className={styles.container}>
-        <Link to="/">Home</Link>
+        <Link to="/">Início</Link>
         <span className={styles.divider} />
-        <Link to="/movies">Movies</Link>
+        <Link to="/movies">Filmes</Link>
         <span className={styles.divider} />
         <Link to="/series">Séries</Link>
       </div>

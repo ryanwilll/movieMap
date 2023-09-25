@@ -47,24 +47,24 @@ const Series = () => {
                     <p>Carregando</p>
                   )}
                 </div>
+                <nav aria-label="Navegação de páginas">
+                  <ReactPaginate
+                    containerClassName="pagination"
+                    activeClassName="active"
+                    breakLabel="..."
+                    nextLabel="Próximo"
+                    onPageChange={handlePageClick}
+                    pageRangeDisplayed={15}
+                    pageCount={100}
+                    forcePage={page - 1}
+                    previousLabel="Voltar"
+                  />
+                </nav>
               </>
             ) : (
               <p>{error}</p>
             )}
           </div>
-          <nav aria-label="Navegação de páginas">
-            <ReactPaginate
-              containerClassName="pagination"
-              activeClassName="active"
-              breakLabel="..."
-              nextLabel="Próximo"
-              onPageChange={handlePageClick}
-              pageRangeDisplayed={15}
-              pageCount={100}
-              forcePage={page - 1}
-              previousLabel="Voltar"
-            />
-          </nav>
         </div>
       </div>
       <Footer />
