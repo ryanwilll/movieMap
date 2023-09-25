@@ -91,7 +91,7 @@ const Home = () => {
             </div>
             <div className={styles.simpleMovie}>
               {error ? (
-                <p className={styles.error}>{error}</p>
+                <p className="error">{error}</p>
               ) : (
                 remainingMovies &&
                 remainingMovies.map((movie) => (

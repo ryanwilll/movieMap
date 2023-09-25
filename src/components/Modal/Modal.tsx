@@ -48,7 +48,7 @@ export const Modal = ({ isOpen, item_id, type, setIsOpen }: Props) => {
                 className={styles.iframe}
                 src={`https://www.youtube.com/embed/${
                   trailersDublados?.[0]?.key ? trailersDublados?.[0]?.key : dataEnUS?.results?.[0]?.key
-                }?si=Bz5t4-fuIGcRbOJI`}
+                }?si=Bz5t4-fuIGcRbOJI&volume=1`}
                 title="YouTube video player"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                 allowFullScreen={true}></iframe>

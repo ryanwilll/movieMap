@@ -22,7 +22,6 @@ const URL_IMAGE = import.meta.env.VITE_IMG
 
 const MovieCard = ({ id, title, poster, date, averange, type }: Props) => {
   const navigate = useNavigate()
-
   const formatedDate = (data: string) => {
     const date = new Date(data)
     const formattedDate = date.toLocaleDateString('pt-BR', {
@@ -36,7 +35,7 @@ const MovieCard = ({ id, title, poster, date, averange, type }: Props) => {
   const goToDetailsPage = () => {
     navigate(type == 'movie' ? `/movie/details/${id}` : `/serie/details/${id}`)
   }
-
+  console.log(type)
   return (
     <>
       <div onClick={() => goToDetailsPage()} className={styles.container}>

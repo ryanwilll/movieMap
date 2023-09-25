@@ -2,6 +2,13 @@ import { useState, useEffect } from 'react'
 
 import { fetchDataFromAPI } from '../utils/api'
 import { IMoviesDetails } from '../types/IMoviesDetails'
+interface AuthorApiResponse {
+  // Defina os campos esperados na resposta dos autores
+  // com os tipos apropriados
+  name: string
+  id: number
+  // Adicione outros campos conforme necessário
+}
 
 const useFetch = (url: string) => {
   const [loading, setLoading] = useState<boolean>(false)
