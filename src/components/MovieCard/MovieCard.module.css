@@ -17,8 +17,8 @@
   height: 100%;
   object-fit: cover;
   object-position: center;
-  min-height: 40rem;
-  max-height: 60rem;
+  min-height: 30rem;
+  max-height: 35rem;
 }
 
 .wrapper {

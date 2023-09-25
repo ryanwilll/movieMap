@@ -1,0 +1,36 @@
+.overlay {
+  background-image: url('../../assets/backgroundLancamentos.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  width: 100%;
+}
+
+.container {
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(12px);
+  min-height: 100vh;
+  height: 100%;
+}
+
+.title {
+  padding-top: 10rem;
+  font-size: 4rem;
+  text-align: center;
+  color: #ccff00;
+  font-weight: 400;
+  text-transform: uppercase;
+}
+
+.movies {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 10rem 0 10rem 0;
+  justify-content: center;
+  gap: 2rem;
+  position: relative;
+  font-size: 4rem;
+  color: #fff;
+  max-width: 95%;
+  margin: 0 auto;
+}
