@@ -44,11 +44,6 @@
   color: rgb(103, 247, 103);
 }
 
-.error {
-  text-align: center;
-  margin: 0 auto;
-}
-
 .poster_path {
   max-width: 450px;
 }
@@ -118,9 +113,18 @@
   width: fit-content;
   border-radius: 2rem;
   gap: 10rem;
+  font-size: 2rem;
   justify-content: center;
   align-items: center;
   margin: 2rem 0;
+}
+
+.wrapper_options > p > svg {
+  font-size: 3rem;
+}
+
+.wrapper_options_tooltip {
+  font-size: 1rem;
 }
 
 .wrapper_share {

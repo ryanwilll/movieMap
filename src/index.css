@@ -15,3 +15,42 @@ a {
   text-decoration: none;
   color: inherit;
 }
+
+.error {
+  text-align: center;
+  margin: 0 auto;
+  font-size: 2rem;
+  color: white;
+  padding-bottom: 2rem;
+}
+
+.pagination {
+  display: flex;
+  justify-content: space-evenly;
+  padding: 1rem 0 3rem 0;
+  color: #ccff00;
+}
+
+.pagination li {
+  list-style: none;
+  font-size: 1.6rem;
+}
+
+.pagination li a {
+  border-radius: 7px;
+  background: #454545;
+  padding: 1rem 1.5rem;
+  cursor: pointer;
+}
+
+.pagination li.previous a,
+.pagination li.next a,
+.pagination li.break a {
+  border-color: transparent;
+}
+
+.pagination li.active a {
+  background-color: #0366d6;
+  border-color: transparent;
+  color: white;
+}

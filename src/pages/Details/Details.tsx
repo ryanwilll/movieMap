@@ -2,6 +2,7 @@
 import { useNavigate, useParams } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import useFetch from '../../hooks/useFetch'
+import { Tooltip } from 'react-tooltip'
 
 //* Componentes
 import { Modal } from '../../components/Modal/Modal'
@@ -27,6 +28,7 @@ const Movie = () => {
   const navigate = useNavigate()
   const [isOpen, setIsOpen] = useState<boolean>(false)
   const { id, type } = useParams()
+
   const { data, error } = useFetch(`/${type == 'movie' ? 'movie' : 'tv'}/${id}?language=pt-BR`)
   const { data: dataSimilar, error: errorSimilar } = useFetch(`/${type == 'movie' ? 'movie' : 'tv'}/${id}/similar?language=pt-BR`)
 
@@ -103,7 +105,13 @@ const Movie = () => {
                       </p>
                     </div>
                     <div className={styles.wrapper_options}>
-                      <p className={styles.wrapper_share} onClick={() => copyLink()}>
+                      <Tooltip id="copy" className={styles.wrapper_options_tooltip} />
+                      <p
+                        data-tooltip-id="copy"
+                        data-tooltip-content="Copiar URL!"
+                        data-tooltip-place="top"
+                        className={styles.wrapper_share}
+                        onClick={() => copyLink()}>
                         <LuShare2 />
                       </p>
                       <p className={styles.wrapper_avarage}>
@@ -126,9 +134,9 @@ const Movie = () => {
             </div>
           </div>
           <div className={styles.similar_movies}>
-            {dataSimilar?.results && type ? (
+            <p className={styles.wrapper_disponivel}>Mais {type == 'movie' ? 'Filmes' : 'Séries'} similares</p>
+            {dataSimilar?.results[0] && type ? (
               <>
-                <p className={styles.wrapper_disponivel}>Mais {type == 'movie' ? 'Filmes' : 'Séries'} similares</p>
                 <div className={styles.movies}>
                   {dataSimilar.results.map((movie: IMoviesDetails) => (
                     <MovieCard
@@ -146,14 +154,16 @@ const Movie = () => {
                 </div>
               </>
             ) : (
-              <p>Ocorreu um erro ao tentar carregar os itens similares. Por favor, tente novamente mais tarde. {errorSimilar}</p>
+              <p className="error">
+                Ocorreu um erro ao tentar carregar os itens similares. Por favor, tente novamente mais tarde. {errorSimilar}
+              </p>
             )}
           </div>
           <Footer />
           <Modal isOpen={isOpen} setIsOpen={setIsOpen} item_id={data.id} type={type} />
         </>
       )}
-      {error && <p className={styles.error}>{error}</p>}
+      {error && <p className="{styles.error}">{error}</p>}
     </>
   )
 }

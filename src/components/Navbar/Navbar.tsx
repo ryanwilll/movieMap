@@ -1,25 +1,23 @@
-import { useState } from 'react'
+import { useState, FormEvent } from 'react'
 import { Link } from 'react-router-dom'
 import { BiSearch, BiWorld } from 'react-icons/bi'
+import { BsX } from 'react-icons/bs'
 
 import logoTipo from '/Vector.svg'
 import styles from './Navbar.module.css'
 
 function Navbar() {
   const [query, setQuery] = useState<string>('')
-  const showInputSearch = (e: any) => {
-    e.preventDefault()
 
-    const inputSearch = document.querySelector(`.${styles.hidden}`)
-    if (inputSearch) {
-      inputSearch.classList.remove(`${styles.hidden}`)
-      return
-    }
-    sendSearch()
+  const sendSearch = (e: FormEvent) => {
+    e.preventDefault()
+    setQuery('')
+    console.log('Enviando a pesquisa: ' + query)
   }
 
-  const sendSearch = () => {
-    console.log('Enviando a pesquisa: ' + query)
+  const clearInput = (e: FormEvent) => {
+    e.preventDefault()
+    setQuery('')
   }
 
   return (
@@ -36,17 +34,24 @@ function Navbar() {
         <Link to="/series">Séries</Link>
       </div>
       <div className={styles.container}>
-        <form className={styles.container}>
-          <input type="text" name="search" id="search" className={styles.hidden} onChange={(e) => setQuery(e.target.value)} />
-          <button onClick={showInputSearch}>
+        <form className={styles.container} onSubmit={sendSearch}>
+          <input
+            onBlur={(e) => e.preventDefault()}
+            type="text"
+            name="search"
+            id="search"
+            placeholder="Pesquisar filmes/series"
+            className={styles.hidden}
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+          />
+          <button onClick={(e) => clearInput(e)} className={styles.form_clear}>
+            <BsX />
+          </button>
+          <button type="submit" onClick={sendSearch}>
             <BiSearch />
           </button>
         </form>
-        <span className={styles.divider} />
-        <div className={styles.container}>
-          <BiWorld />
-          <span>BR</span>
-        </div>
       </div>
     </nav>
   )
