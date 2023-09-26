@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 import styles from './SimpleCard.module.css'
-import noPosts from '../../assets/no-poster.png'
+import noPosts from '../../assets/no-poster.webp'
 
 type Props = {
   id: number

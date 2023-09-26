@@ -34,3 +34,21 @@
   max-width: 95%;
   margin: 0 auto;
 }
+
+.no_results {
+  display: flex;
+  align-items: center;
+
+  width: 80%;
+  margin: 0 auto;
+}
+
+.no_results img {
+  width: 50%;
+  margin: 0 auto;
+}
+
+.no_results p {
+  color: #ccff00;
+  font-size: 2.5em;
+}

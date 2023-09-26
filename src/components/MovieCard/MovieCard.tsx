@@ -5,7 +5,7 @@ import { MdHighQuality } from 'react-icons/md'
 import { AiFillStar } from 'react-icons/ai'
 import styles from './MovieCard.module.css'
 
-import noPosts from '../../assets/no-poster.png'
+import noPosts from '../../assets/no-poster.webp'
 
 type Props = {
   id: number
