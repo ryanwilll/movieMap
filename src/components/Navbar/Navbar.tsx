@@ -25,7 +25,7 @@ function Navbar() {
   }
 
   const clearInput = (e: FormEvent) => {
-    e.preventDefault()
+    e.stopPropagation()
     setQuery('')
   }
 
@@ -73,14 +73,14 @@ function Navbar() {
             value={query}
             onChange={(e) => setQuery(e.target.value)}
           />
+          <button type="submit" onClick={sendSearch}>
+            <BiSearch />
+          </button>
           {query.length > 0 && (
             <button onClick={(e) => clearInput(e)} className={styles.form_clear}>
               <BsX />
             </button>
           )}
-          <button type="submit" onClick={sendSearch}>
-            <BiSearch />
-          </button>
         </form>
       </div>
     </nav>
