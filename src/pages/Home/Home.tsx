@@ -8,7 +8,7 @@ import Skeleton, { SkeletonTheme } from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
 import SimpleCard from '../../components/SimpleCard/SimpleCard'
 import MovieCard from '../../components/MovieCard/MovieCard'
-import { IMoviesDetails } from '../../types/IMoviesDetails'
+import { IMoviesDetails, IMoviesResults } from '../../types/IMoviesDetails'
 
 const Home = () => {
   const { addTopMovies, addRemainingMovies, addLastType, lastType, topMovies, remainingMovies } = useContext(MoviesContext)
@@ -21,7 +21,7 @@ const Home = () => {
     addTopMovies(data?.results.slice(0, 5))
     addRemainingMovies(data?.results.slice(5))
   }, [data])
-
+  console.log(topMovies)
   const changeSelectedType = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSelectedType(e.target.title)
     addLastType(e.target.title)
