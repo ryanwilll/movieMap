@@ -1,7 +1,10 @@
+export interface IMoviesResults {
+  results: IMoviesDetails[]
+}
+
+export interface ISeriesDetails {}
+
 export interface IMoviesDetails {
-  results: any[]
-  adult: boolean
-  backdrop_path: string
   belongs_to_collection: [
     {
       backdrop_path: string
@@ -59,4 +62,9 @@ export interface IMoviesDetails {
   number_of_episodes: number
   number_of_seasons: number
   first_air_date: string
+}
+
+export interface IMoviesOrSeries {
+  adult: boolean
+  backdrop_path: string
 }
