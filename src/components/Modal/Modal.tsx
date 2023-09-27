@@ -4,6 +4,7 @@ import { motion } from 'framer-motion'
 import useFetch from '../../hooks/useFetch'
 
 import styles from './Modal.module.css'
+import { IMovieDetails, IResponseTrailers, ISeriesDetails } from '../../types/IMoviesDetails'
 
 type Props = {
   isOpen: boolean
@@ -17,11 +18,12 @@ export const Modal = ({ isOpen, item_id, type, setIsOpen }: Props) => {
   const { data: dataPtBR } = useFetch(`/${type == 'serie' ? 'tv' : 'movie'}/${item_id}/videos?language=pt-BR`)
   const { data: dataEnUS } = useFetch(`/${type == 'serie' ? 'tv' : 'movie'}/${item_id}/videos?language=en-US`)
 
-  const trailersDublados = dataPtBR?.results.filter((item) => {
-    if (item.name.toLowerCase().includes('dublado')) {
-      return item.name.toLowerCase().includes('dublado')
+  const trailersDublados = dataPtBR?.results.filter((item: IMovieDetails | ISeriesDetails | IResponseTrailers) => {
+    if ((item as ISeriesDetails).name.toLowerCase().includes('dublado')) {
+      return (item as ISeriesDetails).name.toLowerCase().includes('dublado')
     }
-    item.iso_639_1.toLowerCase().includes('pt') && item.iso_3166_1.toLowerCase().includes('br')
+    ;(item as IResponseTrailers).iso_639_1.toLowerCase().includes('pt') &&
+      (item as IResponseTrailers).iso_3166_1.toLowerCase().includes('br')
   })
 
   useEffect(() => {

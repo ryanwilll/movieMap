@@ -1,5 +1,5 @@
 import { ReactNode, createContext, useState } from 'react'
-import { IMediaCommon, IMovieDetails, IMoviesOrSeries, ISeriesDetails } from '../types/IMoviesDetails'
+import { IMovieDetails, ISeriesDetails } from '../types/IMoviesDetails'
 
 type ThemeContextProps = {
   children?: ReactNode
