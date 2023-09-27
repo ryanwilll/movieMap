@@ -1,24 +1,30 @@
 .container {
+  object-position: top center;
+  transition: ease-in-out 0.5s all;
+  cursor: pointer;
   display: flex;
   flex-direction: column;
   font-size: 1.5rem;
-  transition: ease-in-out 0.5s all;
-  cursor: pointer;
-  flex-basis: calc(20% - 2rem); /* Largura do item com margens */
-  flex-grow: 0;
-}
 
-.container:hover {
-  scale: 1.01;
+  justify-content: center;
+  margin: 0 auto;
+  max-width: 300px;
+  width: 100%;
+
+  flex-basis: calc(20% - 2rem); /* Largura do item com margens */
+  flex-grow: 0; /* Impede que os itens se expandam */
 }
 
 .container img {
+  max-width: 300px;
   width: 100%;
-  height: 100%;
   object-fit: cover;
   object-position: center;
-  min-height: 30rem;
-  max-height: 35rem;
+  max-height: 400px;
+}
+
+.container:hover {
+  scale: 1.05;
 }
 
 .wrapper {

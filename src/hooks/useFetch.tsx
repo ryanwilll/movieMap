@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react'
 
 import { fetchDataFromAPI } from '../utils/api'
-import { IMoviesResults } from '../types/IMoviesDetails'
+import { IMoviesOrSeries } from '../types/IMoviesDetails'
 
 const useFetch = (url: string) => {
   const [loading, setLoading] = useState<boolean>(false)
   const [error, setError] = useState<boolean>(false)
-  const [data, setData] = useState<IMoviesResults>()
+  const [data, setData] = useState<IMoviesOrSeries>()
 
   useEffect(() => {
     setLoading(true)

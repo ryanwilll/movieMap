@@ -1,7 +1,7 @@
-import { useState, useContext } from 'react'
+import { useState, useContext, useEffect } from 'react'
 import useFetch from '../../hooks/useFetch'
 import MovieCard from '../../components/MovieCard/MovieCard'
-import { IMoviesDetails } from '../../types/IMoviesDetails'
+import { IMediaCommon, IMovieDetails, ISeriesDetails } from '../../types/IMoviesDetails'
 import ReactPaginate from 'react-paginate'
 
 import styles from './Series.module.css'
@@ -20,6 +20,13 @@ const Series = () => {
     addLastPage(newOffset)
     setPage(newOffset)
   }
+  useEffect(() => {
+    window.scroll({
+      top: 0,
+      behavior: 'smooth',
+    })
+  }, [page])
+
   return (
     <>
       <div className={styles.overlay}>
@@ -30,15 +37,14 @@ const Series = () => {
                 <h1 className={styles.title}>Séries em alta</h1>
                 <div className={styles.movies}>
                   {data?.results ? (
-                    data?.results.map((movie: IMoviesDetails) => (
+                    data?.results.map((movie: IMediaCommon) => (
                       <MovieCard
                         averange={movie.vote_average}
-                        date={movie.release_date || movie.first_air_date}
-                        duration={movie.runtime}
+                        date={(movie as IMovieDetails).release_date || (movie as ISeriesDetails).first_air_date}
                         id={movie.id}
                         loading={loading}
                         poster={movie.poster_path}
-                        title={movie.title || movie.name}
+                        title={(movie as IMovieDetails).title || (movie as ISeriesDetails).name}
                         type="serie"
                         key={movie.id}
                       />
