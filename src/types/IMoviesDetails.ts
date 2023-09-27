@@ -4,8 +4,7 @@ export interface IMediaCommon {
   poster_path: string
   vote_average: number
   media_type: string
-  key: number
-  backdrop_path: string
+  key: []
 }
 
 //* Adicione aqui os campos específicos de filmes, se houver
@@ -20,7 +19,7 @@ export interface ISeriesDetails extends IMediaCommon {
   first_air_date: string
 }
 
-export interface IResponseTrailers extends IMoviesOrSeries {
+export interface ITrailersResults extends IMediaCommon {
   name: string
   iso_639_1: string
   iso_3166_1: string
@@ -28,5 +27,5 @@ export interface IResponseTrailers extends IMoviesOrSeries {
 
 //* Interface que pode conter filmes ou séries
 export interface IMoviesOrSeries {
-  results: (IMovieDetails | ISeriesDetails)[]
+  results: (IMovieDetails | ISeriesDetails | ITrailersResults)[]
 }
