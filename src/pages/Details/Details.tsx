@@ -6,7 +6,7 @@ import { Tooltip } from 'react-tooltip'
 
 //* Componentes
 import { Modal } from '../../components/Modal/Modal'
-import { IMoviesDetails } from '../../types/IMoviesDetails'
+import { IMediaCommon, IMovieDetails, ISeriesDetails } from '../../types/IMoviesDetails'
 import MovieCard from '../../components/MovieCard/MovieCard'
 import Footer from '../../components/Footer/Footer'
 
@@ -80,7 +80,7 @@ const Movie = () => {
                       <p className={styles.wrapper_icons}>
                         <MdOutlineHighQuality />
                       </p>
-                      <p>{data?.genres.map((gen) => gen.name).join(', ')}</p>
+                      <p>{data?.genres.map((gen: any) => gen.name).join(', ')}</p>
                       {data.runtime && (
                         <p className={styles.wrapper_icons}>
                           <PiTimer />
@@ -138,16 +138,15 @@ const Movie = () => {
             {dataSimilar?.results[0] && type ? (
               <>
                 <div className={styles.movies}>
-                  {dataSimilar.results.map((movie: IMoviesDetails) => (
+                  {dataSimilar.results.map((movie: IMediaCommon) => (
                     <MovieCard
                       loading={false}
                       type={type}
                       key={movie.id}
                       id={movie.id}
-                      title={movie.title || movie.name}
+                      title={(movie as IMovieDetails).title || (movie as ISeriesDetails).name}
                       poster={movie.poster_path}
-                      date={movie.release_date || movie.first_air_date}
-                      duration={movie.id}
+                      date={(movie as IMovieDetails).release_date || (movie as ISeriesDetails).first_air_date}
                       averange={movie.vote_average}
                     />
                   ))}

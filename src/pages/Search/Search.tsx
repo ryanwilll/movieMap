@@ -2,7 +2,6 @@ import { useState, useEffect, useContext } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import useFetch from '../../hooks/useFetch'
 import MovieCard from '../../components/MovieCard/MovieCard'
-import { IMoviesDetails } from '../../types/IMoviesDetails'
 import ReactPaginate from 'react-paginate'
 
 import { MoviesContext } from '../../context/MoviesContext'
@@ -10,12 +9,9 @@ import noResults from '../../assets/no-results.webp'
 
 import styles from './Search.module.css'
 import Footer from '../../components/Footer/Footer'
+import { IMediaCommon, IMovieDetails, ISeriesDetails } from '../../types/IMoviesDetails'
 
 const Search = () => {
-  useEffect(() => {
-    window.scrollTo(0, 0)
-  }, [])
-
   const [useParams] = useSearchParams()
   const query = useParams.get('query')
 
@@ -30,6 +26,13 @@ const Search = () => {
     setPage(newOffset)
   }
 
+  useEffect(() => {
+    window.scroll({
+      top: 0,
+      behavior: 'smooth',
+    })
+  }, [page])
+
   return (
     <>
       <div className={styles.overlay}>
@@ -42,15 +45,14 @@ const Search = () => {
                     <h1 className={styles.title}>Resultados para '{query}'</h1>
                     <div className={styles.movies}>
                       {data?.results ? (
-                        data?.results.map((movie: IMoviesDetails) => (
+                        data?.results.map((movie: IMediaCommon) => (
                           <MovieCard
                             averange={movie.vote_average}
-                            date={movie.release_date || movie.first_air_date}
-                            duration={movie.runtime}
+                            date={(movie as IMovieDetails).release_date || (movie as ISeriesDetails).first_air_date}
                             id={movie.id}
                             loading={loading}
                             poster={movie.poster_path}
-                            title={movie.title || movie.name}
+                            title={(movie as IMovieDetails).title || (movie as ISeriesDetails).name}
                             type={movie.media_type === 'tv' ? 'serie' : 'movie'}
                             key={movie.id}
                           />

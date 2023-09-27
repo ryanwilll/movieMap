@@ -8,7 +8,7 @@ import Skeleton, { SkeletonTheme } from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
 import SimpleCard from '../../components/SimpleCard/SimpleCard'
 import MovieCard from '../../components/MovieCard/MovieCard'
-import { IMoviesDetails, IMoviesResults } from '../../types/IMoviesDetails'
+import { IMediaCommon, IMovieDetails, ISeriesDetails } from '../../types/IMoviesDetails'
 
 const Home = () => {
   const { addTopMovies, addRemainingMovies, addLastType, lastType, topMovies, remainingMovies } = useContext(MoviesContext)
@@ -18,9 +18,12 @@ const Home = () => {
   )
 
   useEffect(() => {
-    addTopMovies(data?.results.slice(0, 5))
-    addRemainingMovies(data?.results.slice(5))
+    if (addTopMovies && addRemainingMovies) {
+      addTopMovies(data?.results.slice(0, 5))
+      addRemainingMovies(data?.results.slice(5))
+    }
   }, [data])
+
   console.log(topMovies)
   const changeSelectedType = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSelectedType(e.target.title)
@@ -74,15 +77,14 @@ const Home = () => {
                 <p className={styles.error}>{error}</p>
               ) : (
                 topMovies &&
-                topMovies.map((movie: IMoviesDetails) => (
+                topMovies.map((movie: IMediaCommon) => (
                   <MovieCard
                     type={selectedType ?? ''}
                     key={movie.id}
                     id={movie.id}
-                    title={movie.title || movie.name}
+                    title={(movie as IMovieDetails).title || (movie as ISeriesDetails).name}
                     poster={movie.poster_path}
-                    date={movie.release_date || movie.first_air_date}
-                    duration={movie.id}
+                    date={(movie as IMovieDetails).release_date || (movie as ISeriesDetails).first_air_date}
                     averange={movie.vote_average}
                     loading={loading ?? false}
                   />
@@ -95,7 +97,13 @@ const Home = () => {
               ) : (
                 remainingMovies &&
                 remainingMovies.map((movie) => (
-                  <SimpleCard key={movie.id} type={selectedType} id={movie.id} title={movie.title} poster={movie.poster_path} />
+                  <SimpleCard
+                    key={movie.id}
+                    type={selectedType}
+                    id={movie.id}
+                    title={(movie as IMovieDetails).title}
+                    poster={movie.poster_path}
+                  />
                 ))
               )}
             </div>

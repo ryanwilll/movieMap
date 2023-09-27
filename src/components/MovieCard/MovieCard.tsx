@@ -12,7 +12,6 @@ type Props = {
   title: string
   poster: string
   date: string
-  duration: number
   averange: number
   loading: boolean
   type: string
