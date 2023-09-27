@@ -17,7 +17,7 @@ export const Modal = ({ isOpen, item_id, type, setIsOpen }: Props) => {
   //! Chamar a API aqui
   const { data: dataPtBR } = useFetch(`/${type == 'serie' ? 'tv' : 'movie'}/${item_id}/videos?language=pt-BR`)
   const { data: dataEnUS } = useFetch(`/${type == 'serie' ? 'tv' : 'movie'}/${item_id}/videos?language=en-US`)
-  const trailersDublados = dataPtBR?.results.filter((item: ITrailersResults) => {
+  const trailersDublados = dataPtBR?.results.filter((item) => {
     if ((item as ITrailersResults).name.toLowerCase().includes('dublado')) {
       return (item as ITrailersResults).name.toLowerCase().includes('dublado')
     }

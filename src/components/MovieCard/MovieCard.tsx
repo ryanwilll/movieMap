@@ -41,7 +41,7 @@ const MovieCard = ({ id, title, poster, date, averange, type }: Props) => {
   const goToDetailsPage = () => {
     navigate(type == 'movie' ? `/movie/details/${id}` : `/serie/details/${id}`)
   }
-
+  console.log(`${URL_IMAGE}${poster}`)
   return (
     <>
       <div onClick={() => goToDetailsPage()} className={styles.container}>

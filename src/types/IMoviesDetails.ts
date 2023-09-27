@@ -28,4 +28,17 @@ export interface ITrailersResults extends IMediaCommon {
 //* Interface que pode conter filmes ou séries
 export interface IMoviesOrSeries {
   results: (IMovieDetails | ISeriesDetails | ITrailersResults)[]
+  id: number
+  backdrop_path: string
+  poster_path: string
+  title: string
+  name: string
+  genres: []
+  runtime: number
+  number_of_episodes: number
+  number_of_seasons: number
+  first_air_date: string
+  release_date: string
+  overview: string
+  vote_average: number
 }
