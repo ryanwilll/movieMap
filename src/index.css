@@ -54,3 +54,34 @@ a {
   border-color: transparent;
   color: white;
 }
+
+.pagination-mobile {
+  display: flex;
+  justify-content: space-evenly;
+  padding: 1rem 0 3rem 0;
+  color: #ccff00;
+}
+
+.pagination-mobile li {
+  list-style: none;
+  font-size: 1.6rem;
+}
+
+.pagination-mobile li a {
+  border-radius: 7px;
+  background: #454545;
+  padding: 1rem 1.5rem;
+  cursor: pointer;
+}
+
+.pagination-mobile li.previous a,
+.pagination-mobile li.next a,
+.pagination-mobile li.break a {
+  border-color: transparent;
+}
+
+.pagination-mobile li.active a {
+  background-color: #0366d6;
+  border-color: transparent;
+  color: white;
+}

@@ -118,3 +118,18 @@
 .lancamentos_options input:checked + label {
   background: #111111;
 }
+
+@media (max-width: 768px) {
+  .container {
+    max-width: 100vw;
+    font-size: 2rem;
+  }
+
+  .movies {
+    flex-direction: column;
+  }
+
+  .simpleMovie {
+    flex-direction: column;
+  }
+}

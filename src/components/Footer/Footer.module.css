@@ -55,3 +55,18 @@
 .footer_container .footer_links a:hover {
   color: rgb(103, 247, 103);
 }
+
+@media (max-width: 768px) {
+  .footer_container {
+    font-size: 1rem;
+    margin: 0;
+  }
+
+  .footer_container .footer_links {
+    margin-top: 5rem;
+    padding-bottom: 5rem;
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+  }
+}

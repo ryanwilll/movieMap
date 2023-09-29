@@ -22,7 +22,6 @@ const Home = () => {
     }
   }, [data])
 
-  console.log(topMovies)
   const changeSelectedType = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSelectedType(e.target.title)
     addLastType(e.target.title)

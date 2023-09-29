@@ -119,3 +119,44 @@
 .container svg {
   color: #ccff00;
 }
+
+@media (max-width: 768px) {
+  .navbar {
+    width: 100vw;
+    top: 0;
+    right: 0;
+    justify-content: space-between;
+    right: inherit;
+  }
+
+  .navbar .container {
+    padding: 0;
+  }
+
+  .container img {
+    max-width: 2rem;
+  }
+
+  .container h2 {
+    font-size: 1.5rem;
+  }
+
+  .container span.divider {
+    background: #cccccc;
+    width: 1px;
+    height: 13px;
+    margin: 0 0.5rem;
+  }
+
+  .container a,
+  .container .divider {
+    font-size: 1rem;
+  }
+
+  .container form input,
+  .container form input::placeholder {
+    width: 10rem;
+    font-size: 1rem;
+    display: none;
+  }
+}

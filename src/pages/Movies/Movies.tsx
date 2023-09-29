@@ -10,8 +10,9 @@ import { MoviesContext } from '../../context/MoviesContext'
 import { IMediaCommon, IMovieDetails, ISeriesDetails } from '../../types/IMoviesDetails'
 
 const Movies = () => {
-  const { lastPage, addLastPage } = useContext(MoviesContext)
+  const pagination = document.querySelector('.pagination')
 
+  const { lastPage, addLastPage } = useContext(MoviesContext)
   const [page, setPage] = useState<number>(lastPage)
   const { data, error, loading } = useFetch(`/movie/upcoming?language=pt-BR&page=${page}`)
 
@@ -56,12 +57,12 @@ const Movies = () => {
                 </div>
                 <nav aria-label="Navegação de páginas">
                   <ReactPaginate
-                    containerClassName="pagination"
+                    containerClassName={`${window.innerWidth < 768 ? 'pagination-mobile' : 'pagination'}`}
                     activeClassName="active"
                     breakLabel="..."
                     nextLabel="Próximo"
                     onPageChange={handlePageClick}
-                    pageRangeDisplayed={15}
+                    pageRangeDisplayed={pagination?.classList.contains('pagination-mobile') ? 3 : 15}
                     pageCount={100}
                     forcePage={page - 1}
                     previousLabel="Voltar"
