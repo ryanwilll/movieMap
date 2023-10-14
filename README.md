@@ -16,9 +16,9 @@ Para rodar os testes, faça o seguinte:
 | Parâmetro   | Descrição                           |
 | :---------- | :---------------------------------- |
 | `VITE_TOKEN` |**Obrigatório**, Token Gerado no [The Movie DB](https://developer.themoviedb.org/docs)
-| `VITE_URL_MOVIE` | `string` | **Obrigatório**. Defina `https://api.themoviedb.org/3` 
-| `VITE_IMG` | `string` | **Obrigatório**. Defina `https://image.tmdb.org/t/p/w500/` 
-| `VITE_IMG_DETAILS` | `string` | **Obrigatório**. Defina `https://image.tmdb.org/t/p/original` 
+| `VITE_URL_MOVIE` | `string` | **Obrigatório**. Defina https://api.themoviedb.org/3
+| `VITE_IMG` | `string` | **Obrigatório**. Defina https://image.tmdb.org/t/p/w500/
+| `VITE_IMG_DETAILS` | `string` | **Obrigatório**. Defina https://image.tmdb.org/t/p/original
 
 ## Demonstração
 
