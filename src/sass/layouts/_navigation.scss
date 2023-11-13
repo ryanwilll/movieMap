@@ -1,0 +1,94 @@
+nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 7vh;
+  background-color: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(5px);
+  z-index: 10;
+
+  .container__layout {
+    @include max-width;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 2rem 0rem;
+    color: white;
+    height: 7vh;
+
+    .navbar__image {
+      max-width: 3rem;
+    }
+
+    svg {
+      font-size: 4rem;
+      cursor: pointer;
+    }
+
+    &__navbar__links {
+      font-size: 1.8rem;
+      display: flex;
+      gap: 5rem;
+
+      .navbar__link {
+        position: relative;
+
+        &:after {
+          position: absolute;
+          content: '';
+          width: 100%;
+          height: 0.2rem;
+          background-color: transparent;
+          bottom: -0.5rem;
+          left: 0;
+          transition: width ease-in-out 5s;
+        }
+
+        &:hover:after {
+          content: '';
+          position: absolute;
+          bottom: -0.2rem;
+          left: 0;
+          width: 100%;
+          height: 0.1rem;
+          background: linear-gradient(to right, transparent, $emphasis-color);
+          animation: revealToRight 0.3s both;
+        }
+      }
+    }
+  }
+
+  .menuMobile {
+    opacity: 1;
+    visibility: visible;
+    z-index: 99;
+
+    background-color: pink;
+    height: 93vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    overflow-y: auto;
+
+    transition: ease-in-out 0.5s all;
+
+    &.hidden {
+      opacity: 0;
+      visibility: hidden;
+      z-index: -1;
+    }
+  }
+}
+
+@keyframes revealToRight {
+  from {
+    width: 0%;
+  }
+
+  to {
+    width: 100%;
+  }
+}

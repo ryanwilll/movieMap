@@ -1,29 +1,23 @@
+import { QueryClientProvider } from '@tanstack/react-query'
+import { queryClient } from './services/queryClient'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import { MoviesProvider } from './context/MoviesContext'
-
-import './App.css'
-import Home from './pages/Home/Home'
 import Navbar from './components/Navbar/Navbar'
-import Details from './pages/Details/Details'
-import Movies from './pages/Movies/Movies'
-import Series from './pages/Series/Series'
-import Search from './pages/Search/Search'
+import Home from './pages/Home'
+import './sass/index.scss'
+import NotFound from './pages/NotFound'
 
 function App() {
   return (
     <>
-      <MoviesProvider lastPage={1}>
-        <BrowserRouter>
-          <Navbar />
+      <BrowserRouter>
+        <Navbar />
+        <QueryClientProvider client={queryClient}>
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/movies" element={<Movies />} />
-            <Route path="/series" element={<Series />} />
-            <Route path="/search" element={<Search />} />
-            <Route path="/:type/details/:id" element={<Details />} />
+            <Route path="*" element={<NotFound />} />
           </Routes>
-        </BrowserRouter>
-      </MoviesProvider>
+        </QueryClientProvider>
+      </BrowserRouter>
     </>
   )
 }

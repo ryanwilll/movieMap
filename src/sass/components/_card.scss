@@ -1,0 +1,50 @@
+.card__container {
+  width: 250px;
+  height: 450px;
+  transition: scale 0.3s ease-in-out;
+
+  .group__image {
+    position: relative;
+  }
+
+  &__image {
+    width: 250px;
+    height: 375px;
+    position: relative;
+  }
+
+  &__title {
+    font-size: 1.5rem;
+    color: $neutral-color;
+    text-align: center;
+  }
+
+  &__date {
+    color: #e6e6e6;
+    text-align: center;
+  }
+
+  &:hover {
+    scale: 1.02;
+  }
+
+  .percentage {
+    position: absolute;
+    bottom: 0.5rem;
+    right: 0.5rem;
+    font-size: 1.5rem;
+    color: $neutral-color;
+    background: rgba(0, 0, 0, 0.8);
+  }
+
+  @include media-max($tablet-width) {
+    width: 160px;
+    height: 350px;
+
+    &__image {
+      width: 160px;
+      height: 250px;
+      position: relative;
+    }
+  }
+}

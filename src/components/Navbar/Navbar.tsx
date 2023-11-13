@@ -1,88 +1,78 @@
-import { useState, FormEvent, useEffect } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
-import { BiSearch } from 'react-icons/bi'
-import { BsX } from 'react-icons/bs'
+import { BiMenu, BiX } from 'react-icons/bi'
 
-import logoTipo from '/Vector.svg'
-import styles from './Navbar.module.css'
+import '../../sass/index.scss'
+import { useState, useEffect, useRef } from 'react'
+import { Link } from 'react-router-dom'
 
-function Navbar() {
-  const [query, setQuery] = useState<string>('')
-  const navigate = useNavigate()
+const Navbar = () => {
+  const [isMobileView, setIsMobileView] = useState<boolean | null>(null)
+  const [isOpenMenuMobile, setIsOpenMenuMobile] = useState<boolean | null>(null)
 
-  const sendSearch = (e: FormEvent) => {
-    e.preventDefault()
-    const input = document.querySelector('input')
-    if (input?.classList.contains(`${styles.hidden}`)) {
-      input.classList.remove(`${styles.hidden}`)
-      return
-    }
+  const menuRef = useRef<HTMLDivElement>(null)
 
-    if (!query) return
-
-    navigate(`/search?query=${query}`)
-    setQuery('')
-  }
-
-  const clearInput = (e: FormEvent) => {
-    e.stopPropagation()
-    setQuery('')
+  const handleOpenOrCloseMenu = () => {
+    setIsOpenMenuMobile((prev) => !prev)
+    menuRef?.current?.classList.toggle('hidden')
   }
 
   useEffect(() => {
-    const handleDocumentClick = (e: MouseEvent) => {
-      const navbar = document.querySelector(`.${styles.navbar}`)
-      if (navbar && !navbar.contains(e.target as Node)) {
-        const input = document.querySelector('input')
-        if (input) {
-          input.classList.add(`${styles.hidden}`)
-          return
-        }
+    const getWindowSize = () => {
+      const windowWidth = window.innerWidth
+
+      if (windowWidth < 1024) {
+        setIsMobileView(true)
+      } else {
+        setIsMobileView(false)
+        setIsOpenMenuMobile(false)
       }
     }
+    getWindowSize()
 
-    document.addEventListener('click', handleDocumentClick)
-
-    return () => {
-      document.removeEventListener('click', handleDocumentClick)
-    }
+    window.addEventListener('resize', getWindowSize)
   }, [])
 
   return (
-    <nav className={styles.navbar}>
-      <Link to="/" className={styles.container}>
-        <img src={logoTipo} alt="Logo tipo da página" />
-        <h2>MovieMap</h2>
-      </Link>
-      <div className={styles.container}>
-        <Link to="/">Início</Link>
-        <span className={styles.divider} />
-        <Link to="/movies">Filmes</Link>
-        <span className={styles.divider} />
-        <Link to="/series">Séries</Link>
-      </div>
-      <div className={styles.container}>
-        <form className={styles.container} onSubmit={sendSearch}>
-          <input
-            onBlur={(e) => e.preventDefault()}
-            type="text"
-            name="search"
-            id="search"
-            placeholder="Pesquisar filmes/series"
-            className={styles.hidden}
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-          />
-          <button type="submit" onClick={sendSearch}>
-            <BiSearch />
-          </button>
-          {query.length > 0 && (
-            <button onClick={(e) => clearInput(e)} className={styles.form_clear}>
-              <BsX />
-            </button>
+    <nav>
+      <div className="container__layout">
+        <div>
+          <img className="navbar__image" src="Vector.svg" alt="Logotipo do MovieMap" />
+        </div>
+
+        <div>
+          {isMobileView && !isOpenMenuMobile && <BiMenu onClick={handleOpenOrCloseMenu} />}
+          {isMobileView && isOpenMenuMobile && <BiX onClick={handleOpenOrCloseMenu} />}
+
+          {!isMobileView && (
+            <div className="container__layout__navbar__links">
+              <Link className="navbar__link" to={'/'}>
+                Home
+              </Link>
+              <Link className="navbar__link" to={'/1'}>
+                Home 1
+              </Link>
+              <Link className="navbar__link" to={'/2'}>
+                Home 2
+              </Link>
+              <Link className="navbar__link" to={'/3'}>
+                Home 3
+              </Link>
+              <Link className="navbar__link" to={'/4'}>
+                Home 4
+              </Link>
+            </div>
           )}
-        </form>
+        </div>
       </div>
+
+      {isMobileView && (
+        <div className="menuMobile hidden" ref={menuRef}>
+          <a href="#">Item #1</a>
+          <a href="#">Item #2</a>
+          <a href="#">Item #3</a>
+          <a href="#">Item #4</a>
+          <a href="#">Item #5</a>
+        </div>
+      )}
     </nav>
   )
 }

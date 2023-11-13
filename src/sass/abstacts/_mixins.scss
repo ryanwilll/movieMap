@@ -1,0 +1,10 @@
+@mixin max-width {
+  max-width: 90vw;
+  margin: 0 auto;
+}
+
+@mixin media-max($size) {
+  @media screen and (max-width: $size) {
+    @content;
+  }
+}
