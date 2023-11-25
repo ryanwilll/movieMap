@@ -1,0 +1,105 @@
+.details {
+  &_section {
+    min-height: 100vh;
+    width: 100vw;
+    background-position: center top;
+    background-size: cover;
+
+    .details_container {
+      padding-top: 12vh;
+      backdrop-filter: blur(1rem);
+      background-color: rgba(0, 0, 0, 0.6);
+      min-height: 100vh;
+      width: 100vw;
+
+      .btn_return {
+        background-color: transparent;
+        border: none;
+        border-radius: 0.5rem;
+        color: $neutral-color;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        font-size: 2rem;
+        padding: 1rem 2rem;
+        transition: background-color 0.4s ease-in-out;
+        cursor: pointer;
+
+        &:hover {
+          background-color: $tertiary-color;
+        }
+      }
+
+      .details_wrapper {
+        @include max-width;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        height: max-content;
+
+        .poster_descriptions {
+          display: flex;
+          padding: 1rem 2rem;
+          flex-direction: column;
+          align-items: center;
+          text-align: center;
+          font-size: 1.8rem;
+          color: $neutral-color;
+          border-radius: 1rem;
+          text-shadow: 4px 2px rgba(0, 0, 0, 0.5);
+          gap: 2rem;
+
+          .image_poster {
+            .poster {
+              max-width: 400px;
+              height: 450px;
+              border-radius: 2rem;
+              text-align: center;
+            }
+          }
+        }
+
+        .more_details {
+          padding: 3rem 0;
+
+          .short_infos {
+            @include backgroundRounded;
+
+            background-color: rgba(0, 0, 0, 0.4);
+            border-radius: 0.5rem;
+            color: $neutral-color;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.8rem;
+            text-align: center;
+
+            .type {
+              background-color: $neutral-color;
+              color: black;
+              padding: 0.5rem 01rem;
+              border-radius: 0.3rem;
+              text-shadow: 0.05rem 0.08rem rgba(0, 0, 0, 0.4);
+              box-shadow: 0.3rem 0.2rem rgba(0, 0, 0, 0.4);
+            }
+
+            .icon_and_text {
+              display: flex;
+              align-items: center;
+              gap: 1rem;
+            }
+          }
+
+          .overview {
+            @include backgroundRounded;
+            margin-top: 3rem;
+            color: $neutral-color;
+            font-size: 1.8rem;
+          }
+        }
+      }
+    }
+  }
+}

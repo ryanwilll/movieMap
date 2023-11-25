@@ -1,7 +1,6 @@
 import axios from 'axios'
 
 const TMDB_TOKEN = import.meta.env.VITE_TOKEN
-console.log(TMDB_TOKEN)
 
 export const api = axios.create({
   baseURL: 'https://api.themoviedb.org/3',
@@ -10,3 +9,13 @@ export const api = axios.create({
     Authorization: `Authorization: Bearer ${TMDB_TOKEN}`,
   },
 })
+
+export const fetchData = async (url: string) => {
+  const res = await api.get(url)
+  return res.data.results
+}
+
+export const fetchDetails = async (url: string) => {
+  const res = await api.get(url)
+  return res.data
+}

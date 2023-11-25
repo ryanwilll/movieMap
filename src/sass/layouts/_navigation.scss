@@ -18,6 +18,12 @@ nav {
     color: white;
     height: 7vh;
 
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
     .navbar__image {
       max-width: 3rem;
     }

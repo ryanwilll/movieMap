@@ -1,8 +1,17 @@
 import { Link } from 'react-router-dom'
-import { IMovies } from '../../types/IMovies'
 import CircularProgress from '@mui/joy/CircularProgress'
 
-const Card = ({ id, adult, poster_path, title, vote_average, release_date }: IMovies) => {
+type Props = {
+  id: number
+  isAdult: boolean
+  type: string
+  bannerUrl: string
+  name: string
+  vote_average: number
+  release_date: string
+}
+
+const Card = ({ id, isAdult, type, bannerUrl, name, vote_average, release_date }: Props) => {
   const setColorCircularProgress = (arg: number) => {
     if (arg < 4) {
       return 'danger'
@@ -17,10 +26,17 @@ const Card = ({ id, adult, poster_path, title, vote_average, release_date }: IMo
     return arg === 0 ? 'N/A' : arg.toFixed(1)
   }
 
+  const formaterDate = (arg: string) => {
+    const date = new Date(arg)
+    return new Intl.DateTimeFormat('pt-BR', {
+      dateStyle: 'short',
+    }).format(date)
+  }
+
   return (
-    <Link to={`/details/${id}`} className="card__container">
+    <Link to={`${type}/details/${id}`} className="card__container">
       <div className="group__image">
-        <img className="card__container__image" src={`https://image.tmdb.org/t/p/w500/${poster_path}`} alt={`Poster ${title}`} />
+        <img className="card__container__image" src={`https://image.tmdb.org/t/p/w500/${bannerUrl}`} alt={`Poster ${name}`} />
         <CircularProgress
           className="percentage"
           color={setColorCircularProgress(vote_average)}
@@ -31,8 +47,8 @@ const Card = ({ id, adult, poster_path, title, vote_average, release_date }: IMo
           <p>{returnAverageFormatted(vote_average)}</p>
         </CircularProgress>
       </div>
-      <h3 className="card__container__title">{title}</h3>
-      <p className="card__container__date">{release_date}</p>
+      <h3 className="card__container__name">{name}</h3>
+      <p className="card__container__date">{formaterDate(release_date)}</p>
     </Link>
   )
 }

@@ -34,9 +34,10 @@ const Navbar = () => {
   return (
     <nav>
       <div className="container__layout">
-        <div>
-          <img className="navbar__image" src="Vector.svg" alt="Logotipo do MovieMap" />
-        </div>
+        <Link to="/" className="brand">
+          <img className="navbar__image" src="/Logo.svg" alt="Logotipo do MovieMap" />
+          <h1>MovieMap</h1>
+        </Link>
 
         <div>
           {isMobileView && !isOpenMenuMobile && <BiMenu onClick={handleOpenOrCloseMenu} />}
